@@ -1,19 +1,43 @@
 /**
  * Pantalla 2 — Dashboard / Panel de oportunidades compatibles. 👤 Persona A.
  *
- * Muestra el perfil activo + lista de OportunidadCompatible (POST /api/match).
- * Incluye el "Simulador de Match": al cambiar el rubro, refresca las ofertas.
- *
- * STUB: render con mocks para no bloquearte. Cambia a fetch real cuando
- * /api/match esté listo. El contrato no cambia.
+ * Lee el perfil Empresa del store (localStorage) y pide a POST /api/match
+ * las OportunidadCompatible ya rankeadas. Si no hay perfil, vuelve al inicio.
  */
-import { mockOportunidades, mockEmpresa } from "@/lib/mocks";
+'use client';
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { OportunidadCard } from "@/components/dashboard/OportunidadCard";
-import { LayoutDashboard, Telescope, FileCheck, BarChart2, Settings, Plus, Search, Bell, HelpCircle, RefreshCcw, ShieldCheck, AlertTriangle, TrendingUp, Filter, ChevronDown } from "lucide-react";
+import { LayoutDashboard, Telescope, FileCheck, BarChart2, Settings, Plus, Search, Bell, HelpCircle, RefreshCcw, ShieldCheck, AlertTriangle, TrendingUp, Filter, ChevronDown, Loader2 } from "lucide-react";
+import type { Empresa, OportunidadCompatible } from "@/lib/types";
+import { api } from "@/lib/api";
+import { getEmpresa } from "@/lib/store/empresa";
 
 export default function DashboardPage() {
-  const empresa = mockEmpresa;
-  const oportunidades = mockOportunidades;
+  const router = useRouter();
+  const [empresa, setEmpresa] = useState<Empresa | null>(null);
+  const [oportunidades, setOportunidades] = useState<OportunidadCompatible[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const e = getEmpresa();
+    if (!e) {
+      router.replace("/");
+      return;
+    }
+    setEmpresa(e);
+    api<OportunidadCompatible[]>("/api/match", {
+      method: "POST",
+      body: JSON.stringify({ empresa: e }),
+    })
+      .then(setOportunidades)
+      .catch((err) => setError(err instanceof Error ? err.message : "Error cargando oportunidades"))
+      .finally(() => setLoading(false));
+  }, [router]);
+
+  if (!empresa) return null;
 
   return (
     <div className="flex min-h-screen bg-[#f8f9f8] text-[#1e1b19] font-['Hanken_Grotesk']">
@@ -97,10 +121,10 @@ export default function DashboardPage() {
             <div className="flex items-center pl-6 border-l border-[#c3c6d5]">
               <div className="text-right mr-2 hidden lg:block">
                 <p className="font-['Hanken_Grotesk'] text-xs font-semibold text-[#1e1b19]">
-                  {empresa.representanteLegal || "Alejandro V."}
+                  {empresa.razonSocial}
                 </p>
                 <p className="text-[10px] font-['Hanken_Grotesk'] text-[#434653] uppercase">
-                  Director Ejecutivo
+                  RUC {empresa.ruc}
                 </p>
               </div>
               <img
@@ -119,10 +143,10 @@ export default function DashboardPage() {
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
               <div>
                 <h2 className="font-['Libre_Caslon_Text'] text-4xl text-[#1e1b19]">
-                  Buenos días, Alejandro
+                  Hola, {empresa.razonSocial}
                 </h2>
                 <p className="font-['Hanken_Grotesk'] text-lg text-[#434653]">
-                  {empresa.razonSocial}
+                  RUC {empresa.ruc} · {empresa.estadoSunat}
                 </p>
               </div>
               <div className="flex items-center text-[#434653] font-['Hanken_Grotesk'] text-xs font-semibold bg-white border border-[#c3c6d5] px-4 py-2 rounded-lg shrink-0 w-max">
@@ -223,9 +247,26 @@ export default function DashboardPage() {
               </span>
             </div>
             <div className="space-y-6">
-              {oportunidades.map((o, idx) => (
-                <OportunidadCard key={o.licitacion.id} oportunidad={o} index={idx} />
-              ))}
+              {loading && (
+                <div className="bg-white border border-[#c3c6d5] rounded-xl p-12 flex flex-col items-center justify-center text-[#434653]">
+                  <Loader2 className="w-8 h-8 animate-spin text-[#00327d] mb-3" />
+                  <p className="font-['Hanken_Grotesk'] text-sm">Evaluando tu compatibilidad con las licitaciones vigentes…</p>
+                </div>
+              )}
+              {!loading && error && (
+                <div className="bg-white border border-[#ffdad6] rounded-xl p-12 text-center text-[#ba1a1a]">
+                  <p className="font-['Hanken_Grotesk'] text-sm font-semibold">{error}</p>
+                </div>
+              )}
+              {!loading && !error && oportunidades.length === 0 && (
+                <div className="bg-white border border-[#c3c6d5] rounded-xl p-12 text-center text-[#434653]">
+                  <p className="font-['Hanken_Grotesk'] text-sm">No encontramos oportunidades compatibles por ahora.</p>
+                </div>
+              )}
+              {!loading && !error &&
+                oportunidades.map((o, idx) => (
+                  <OportunidadCard key={o.licitacion.id} oportunidad={o} index={idx} />
+                ))}
             </div>
           </section>
         </main>

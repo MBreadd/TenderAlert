@@ -1,13 +1,65 @@
-import { mockFichas, mockLicitaciones } from "@/lib/mocks";
+'use client';
+
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { DocumentReview } from "@/components/dashboard/DocumentReview";
 import { ActionPlanItem } from "@/components/dashboard/ActionPlanItem";
 import Link from "next/link";
-import { LayoutDashboard, Telescope, FileCheck, Search, ChevronRight, Sparkles, Landmark, Share2 } from "lucide-react";
+import { LayoutDashboard, Telescope, FileCheck, Search, ChevronRight, Sparkles, Landmark, Share2, Loader2 } from "lucide-react";
+import type { Licitacion, FichaRecomendacion } from "@/lib/types";
+import { api } from "@/lib/api";
+import { getEmpresa } from "@/lib/store/empresa";
 
-export default async function FichaPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const licitacion = mockLicitaciones.find((l) => l.id === id) ?? mockLicitaciones[0];
-  const ficha = mockFichas[licitacion.id];
+export default function FichaPage() {
+  const router = useRouter();
+  const { id } = useParams<{ id: string }>();
+  const [licitacion, setLicitacion] = useState<Licitacion | null>(null);
+  const [ficha, setFicha] = useState<FichaRecomendacion | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const empresa = getEmpresa();
+    if (!empresa) {
+      router.replace("/");
+      return;
+    }
+    // La licitación (datos del proceso) viene de la lista; la ficha (RAG) se
+    // genera con el perfil de la empresa. Las pedimos en paralelo.
+    Promise.all([
+      api<Licitacion[]>("/api/licitaciones"),
+      api<FichaRecomendacion>(`/api/ficha/${id}`, {
+        method: "POST",
+        body: JSON.stringify({ empresa }),
+      }),
+    ])
+      .then(([lics, f]) => {
+        setLicitacion(lics.find((l) => l.id === id) ?? null);
+        setFicha(f);
+      })
+      .catch((err) => setError(err instanceof Error ? err.message : "Error generando la ficha"))
+      .finally(() => setLoading(false));
+  }, [id, router]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8f9f8] text-[#434653] font-['Hanken_Grotesk'] gap-3">
+        <Loader2 className="w-8 h-8 animate-spin text-[#00327d]" />
+        <p className="text-sm">Generando tu ficha de recomendación con IA…</p>
+      </div>
+    );
+  }
+
+  if (error || !licitacion) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8f9f8] text-[#ba1a1a] font-['Hanken_Grotesk'] gap-3 px-6 text-center">
+        <p className="text-sm font-semibold">{error ?? "No encontramos esta licitación."}</p>
+        <Link href="/dashboard" className="text-[#00327d] text-xs font-semibold hover:underline">
+          ← Volver al dashboard
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen bg-[#f8f9f8] text-[#1e1b19] font-['Hanken_Grotesk']">

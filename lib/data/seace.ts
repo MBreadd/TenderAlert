@@ -7,9 +7,6 @@
 import type { Licitacion } from "@/lib/types";
 import { mockLicitaciones } from "@/lib/mocks";
 
-const BASE_URL = process.env.LATINFO_API_URL ?? "";
-const API_KEY = process.env.LATINFO_API_KEY ?? "";
-
 /** Estructura OCDS mínima (un `release`). Ajustar a la respuesta real. */
 interface OcdsRelease {
   ocid: string;
@@ -43,7 +40,10 @@ function mapRelease(r: OcdsRelease): Licitacion {
 
 /** Lista licitaciones vigentes (opcionalmente filtradas por rubro). */
 export async function fetchLicitaciones(rubro?: string): Promise<Licitacion[]> {
-  if (!BASE_URL || !API_KEY) {
+  const BASE_URL = process.env.LATINFO_API_URL ?? "";
+  const API_KEY = process.env.LATINFO_API_KEY ?? "";
+
+  if (!BASE_URL || !API_KEY || BASE_URL.includes("example")) {
     console.warn("[seace] sin credenciales — usando mock");
     return rubro ? mockLicitaciones.filter((l) => l.rubro === rubro) : mockLicitaciones;
   }

@@ -1,29 +1,48 @@
 'use client';
 
-import Link from "next/link";
 import { ShieldCheck, Database, Search, FileCheck, ArrowRight, Lock, Loader2, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import type { Empresa } from "@/lib/types";
+import { api } from "@/lib/api";
+import { setEmpresa } from "@/lib/store/empresa";
 
 export default function Home() {
   const router = useRouter();
   const [ruc, setRuc] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationStep, setVerificationStep] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleStart = (e: React.FormEvent) => {
+  const handleStart = async (e: React.FormEvent) => {
     e.preventDefault();
     if (ruc.length < 11) return;
-    
+
+    setError(null);
     setIsVerifying(true);
-    
-    // Simulate Identity Verification steps
-    setTimeout(() => setVerificationStep(1), 800);
-    setTimeout(() => setVerificationStep(2), 1600);
-    setTimeout(() => setVerificationStep(3), 2400);
-    setTimeout(() => {
+
+    // Animación escalonada de "verificación" (puro UX).
+    const timers = [
+      setTimeout(() => setVerificationStep(1), 800),
+      setTimeout(() => setVerificationStep(2), 1600),
+      setTimeout(() => setVerificationStep(3), 2400),
+    ];
+
+    try {
+      // Consulta real a SUNAT/OSCE vía /api/empresa, con un piso de tiempo
+      // para que la animación alcance a verse en pantalla.
+      const [empresa] = await Promise.all([
+        api<Empresa>("/api/empresa", { method: "POST", body: JSON.stringify({ ruc }) }),
+        new Promise((resolve) => setTimeout(resolve, 3000)),
+      ]);
+      setEmpresa(empresa);
       router.push("/onboarding");
-    }, 3200);
+    } catch (err) {
+      timers.forEach(clearTimeout);
+      setVerificationStep(0);
+      setIsVerifying(false);
+      setError(err instanceof Error ? err.message : "No pudimos verificar el RUC. Intenta de nuevo.");
+    }
   };
 
   if (isVerifying) {
@@ -109,6 +128,9 @@ export default function Home() {
               Comenzar análisis gratis
               <ArrowRight className="w-5 h-5" />
             </button>
+            {error && (
+              <p className="text-sm text-[#ba1a1a] font-semibold text-center">{error}</p>
+            )}
           </form>
         </div>
 

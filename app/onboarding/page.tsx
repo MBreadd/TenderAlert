@@ -3,22 +3,33 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShieldCheck, ExternalLink, BarChart2, Brain } from 'lucide-react';
+import type { Empresa } from '@/lib/types';
+import { getEmpresa } from '@/lib/store/empresa';
 
 export default function OnboardingPage() {
   const router = useRouter();
   const [capacity, setCapacity] = useState(0);
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [empresa, setEmpresaState] = useState<Empresa | null>(null);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    const e = getEmpresa();
+    if (!e) {
+      // Sin perfil (entró directo a /onboarding): volver al inicio.
+      router.replace('/');
+      return;
+    }
+    setEmpresaState(e);
+  }, [router]);
 
   const handleConfirm = () => {
-    // In a real flow, you would POST this to an API. 
-    // We navigate to dashboard as requested.
+    // El perfil ya quedó persistido desde la landing; el dashboard lo lee del store.
     router.push('/dashboard');
   };
+
+  if (!empresa) return null;
 
   return (
     <div className="min-h-screen bg-[#F8F9F8] flex flex-col items-center">
@@ -70,7 +81,7 @@ export default function OnboardingPage() {
                   Razón Social
                 </p>
                 <p className="font-['Libre_Caslon_Text'] text-lg font-semibold text-[#1e1b19]">
-                  Infrastructura Global S.A.C.
+                  {empresa.razonSocial}
                 </p>
               </div>
               <div className="space-y-1">
@@ -78,7 +89,7 @@ export default function OnboardingPage() {
                   RUC
                 </p>
                 <p className="font-['Hanken_Grotesk'] text-lg font-semibold text-[#1e1b19] tracking-tight">
-                  20603498210
+                  {empresa.ruc}
                 </p>
               </div>
               <div className="md:col-span-2 h-px bg-[#c3c6d5] opacity-30"></div>
@@ -87,26 +98,26 @@ export default function OnboardingPage() {
                   Estado RNP
                 </p>
                 <div className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span className={`w-2 h-2 rounded-full ${empresa.rnpVigente ? 'bg-emerald-500' : 'bg-[#ba1a1a]'}`}></span>
                   <p className="font-['Hanken_Grotesk'] text-base font-medium text-[#1e1b19]">
-                    Vigente
+                    {empresa.rnpVigente ? 'Vigente' : 'No vigente'}
                   </p>
                 </div>
               </div>
               <div className="space-y-1">
                 <p className="font-['Hanken_Grotesk'] text-[11px] font-medium text-[#434653] uppercase">
-                  Representante Legal
+                  Estado SUNAT
                 </p>
                 <p className="font-['Hanken_Grotesk'] text-base text-[#1e1b19]">
-                  Carlos Mendoza
+                  {empresa.estadoSunat}
                 </p>
               </div>
               <div className="md:col-span-2 space-y-1">
                 <p className="font-['Hanken_Grotesk'] text-[11px] font-medium text-[#434653] uppercase">
-                  Actividad Económica Principal
+                  Actividad / Especialidad
                 </p>
                 <p className="font-['Hanken_Grotesk'] text-base text-[#1e1b19]">
-                  Construcción de edificios y obras de ingeniería civil
+                  {empresa.especialidad || empresa.rubros.join(', ') || empresa.domicilioFiscal || '—'}
                 </p>
               </div>
             </div>
