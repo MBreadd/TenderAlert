@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
+import { Libre_Caslon_Text, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
+
+const libreCaslon = Libre_Caslon_Text({
+  variable: "--font-libre-caslon",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const hankenGrotesk = Hanken_Grotesk({
+  variable: "--font-hanken-grotesk",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
 
 export const metadata: Metadata = {
   title: "TenderAlert — Inteligencia de Licitaciones",
-  description:
-    "Descubre y gana licitaciones del Estado peruano con inteligencia artificial. Conectamos tu empresa con oportunidades compatibles en tiempo real.",
+  description: "El analista invisible que conecta a tu empresa con las mejores oportunidades del Estado peruano. Evalúa compatibilidad y audita bases en segundos.",
 };
 
 export default function RootLayout({
@@ -13,18 +25,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning className="h-full antialiased">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body suppressHydrationWarning className="min-h-full flex flex-col">
-        {children}
-      </body>
+    <html
+      lang="es"
+      suppressHydrationWarning
+      className={`${libreCaslon.variable} ${hankenGrotesk.variable} h-full antialiased`}
+    >
+      <body suppressHydrationWarning className="min-h-full flex flex-col font-sans">{children}</body>
     </html>
   );
 }
+

@@ -126,3 +126,16 @@ export interface OnboardingChatResponse {
 export type ApiResponse<T> =
   | { ok: true; data: T }
   | { ok: false; error: string };
+
+// ---------------------------------------------------------------------------
+// Licitaciones Postuladas / Guardadas (Mis Licitaciones)
+// ---------------------------------------------------------------------------
+export type EstadoPostulacion = "en_progreso" | "presentada" | "adjudicada" | "no_adjudicada";
+
+export interface LicitacionPostulada {
+  licitacion: Licitacion;
+  estadoPostulacion: EstadoPostulacion;
+  fechaPresentacion?: string;
+  progresoChecklist: number; // 0-100%
+}
+

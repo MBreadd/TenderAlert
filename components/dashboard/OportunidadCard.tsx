@@ -15,7 +15,7 @@ export function OportunidadCard({
   index: number;
 }) {
   const { licitacion: lic, match } = oportunidad;
-  const isLocked = index > 0; // First item is free, others locked
+  const isLocked = index > 1; // First 2 items are free, others locked
   const isCerrada = new Date(lic.fechaLimite) < new Date();
   
   // Determinamos el color y texto basado en la compatibilidad (mockeado)
@@ -38,7 +38,8 @@ export function OportunidadCard({
   }
 
   return (
-    <div className="bg-white border border-[#c3c6d5] rounded-xl overflow-hidden group hover:border-[#00327d] transition-colors mb-6">
+    <div className="bg-white border border-[#c3c6d5] rounded-xl overflow-hidden group hover:border-[#00327d] hover:shadow-md transition-all duration-200 mb-6">
+
       <div className="bg-[#faf2ee] px-6 py-2 border-b border-[#c3c6d5] flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
         <span className="font-['Hanken_Grotesk'] text-xs text-[#434653] uppercase tracking-wider font-semibold">
           {lic.entidad}
