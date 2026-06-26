@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TenderAlert | Opportunity Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Hanken+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .ai-accent-bar {
+            border-left: 4px solid #0047ab;
+        }
+        body {
+            background-color: #f8f9f8;
+            font-family: 'Hanken Grotesk', sans-serif;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#cec5bf",
+                        "surface-tint": "#2559bd",
+                        "primary-fixed": "#dae2ff",
+                        "on-tertiary-fixed": "#1f1b17",
+                        "on-tertiary-container": "#c6bdb7",
+                        "surface-container-low": "#faf2ee",
+                        "primary-container": "#0047ab",
+                        "tertiary": "#3b3531",
+                        "on-surface-variant": "#434653",
+                        "on-surface": "#1e1b19",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#e1e3e2",
+                        "outline-variant": "#c3c6d5",
+                        "tertiary-container": "#524c48",
+                        "on-primary-fixed-variant": "#00419e",
+                        "on-secondary-fixed": "#191c1c",
+                        "surface-container": "#f4ece8",
+                        "inverse-on-surface": "#f7efeb",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "outline": "#737784",
+                        "surface-container-highest": "#e9e1dd",
+                        "secondary-container": "#e1e3e2",
+                        "inverse-primary": "#b1c5ff",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#4b4641",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-dim": "#e0d8d5",
+                        "secondary": "#5c5f5e",
+                        "background": "#fff8f5",
+                        "on-secondary-container": "#626564",
+                        "on-primary-container": "#a5bdff",
+                        "inverse-surface": "#33302d",
+                        "surface": "#fff8f5",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e9e1dd",
+                        "on-primary-fixed": "#001946",
+                        "on-background": "#1e1b19",
+                        "tertiary-fixed": "#eae1da",
+                        "surface-container-high": "#eee7e3",
+                        "secondary-fixed-dim": "#c5c7c6",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#b1c5ff",
+                        "surface-bright": "#fff8f5",
+                        "primary": "#00327d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "md": "16px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "gutter": "20px",
+                        "container-max": "1280px",
+                        "xl": "48px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Libre Caslon Text"],
+                        "headline-sm": ["Libre Caslon Text"],
+                        "label-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-md": ["Libre Caslon Text"],
+                        "headline-lg": ["Libre Caslon Text"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "body-sm": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["30px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                        "headline-sm": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "400"}],
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "label-sm": ["11px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col py-xl bg-surface border-r border-outline-variant z-50 overflow-y-auto">
+<div class="px-lg mb-xl">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">TenderAlert</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">Enterprise Procurement</p>
+</div>
+<nav class="flex-1 px-sm space-y-xs">
+<a class="flex items-center px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md group" href="#">
+<span class="material-symbols-outlined mr-md">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center px-md py-sm rounded-lg text-primary font-bold border-l-4 border-primary bg-primary-container/10 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-md">search_insights</span>
+<span>Opportunities</span>
+</a>
+<a class="flex items-center px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-md">assignment_turned_in</span>
+<span>My Tenders</span>
+</a>
+<a class="flex items-center px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-md">leaderboard</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center px-md py-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined mr-md">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="px-md mt-auto pt-lg border-t border-outline-variant">
+<button class="w-full py-md bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">add_chart</span>
+                New Analysis
+            </button>
+</div>
+</aside>
+<!-- TopNavBar Anchor -->
+<header class="flex justify-between items-center w-full px-xl py-md ml-64 sticky top-0 bg-surface border-b border-outline-variant z-40">
+<div class="flex items-center gap-xl flex-1">
+<div class="relative w-full max-w-md focus-within:ring-2 focus-within:ring-primary/10 rounded-lg">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border-outline-variant rounded-lg pl-xl pr-md py-sm text-body-sm focus:border-primary focus:ring-0" placeholder="Search opportunities, entities, or keywords..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<button class="p-sm text-on-surface-variant hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-sm text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="flex items-center gap-md pl-lg border-l border-outline-variant">
+<div class="text-right">
+<p class="font-label-md text-label-md text-on-surface">M. Arrieta</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Procurement Director</p>
+</div>
+<img class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="Close up professional portrait of a senior executive in a light blue suit against a clean, neutral architectural background. The image has soft, natural lighting and reflects a confident, professional persona suited for a corporate high-end platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEXCqANHAiyqs_OPxech0KUu9XinFtLFlpxxRrLJwe_H11LcHKFDiNy7jbNMqY6dW_sqob8-sLI6jzY09n7rf6HBalP4CJU2D57qvWO5AwFuSw00dZtDpq2ep04Du1KXFzmu_Jc2BNwTr-mvCFbBG3bUxDgGOWoeMuIrn2uJyx_hf0fKRaAfcc9i3-8EPzZH4q-73meYxnQwguQ8QqsWQ6g55Jnxoqa6JEbmFmTKf2fFBXGCD5YQv-LQU1SksNNaUNI9ltPFk9c8ie"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-xl max-w-7xl">
+<!-- Breadcrumb -->
+<nav class="flex items-center gap-sm mb-lg text-on-surface-variant font-label-md text-label-md">
+<a class="hover:text-primary" href="#">Explorer</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary" href="#">Active Opportunities</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold">Opportunity Detail</span>
+</nav>
+<div class="grid grid-cols-12 gap-xl">
+<!-- Primary Column (8 Columns) -->
+<div class="col-span-12 lg:col-span-8 space-y-xl">
+<!-- Header Section -->
+<section>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-md leading-tight">Modernización de Infraestructura Tecnológica - Ministerio de Educación</h2>
+<div class="flex flex-wrap items-center gap-lg py-md border-y border-outline-variant">
+<div class="flex items-center gap-md">
+<div class="w-16 h-16 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="font-headline-md text-headline-md font-bold">92</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Readiness Score</p>
+<p class="font-headline-sm text-headline-sm text-primary">Alta Afinidad</p>
+</div>
+</div>
+<div class="h-10 w-px bg-outline-variant hidden md:block"></div>
+<div class="flex gap-sm">
+<span class="px-md py-sm bg-surface-container-highest text-on-surface font-label-md text-label-md rounded-full border border-outline-variant">Priority: High</span>
+<span class="px-md py-sm bg-primary-container/10 text-primary font-label-md text-label-md rounded-full border border-primary/20">Analysis: Verified</span>
+</div>
+</div>
+</section>
+<!-- Executive Summary (AI Memo Style) -->
+<div class="bg-primary-container/10 border border-primary/20 rounded-xl p-lg mb-lg flex items-center gap-lg">
+<div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-primary font-bold uppercase tracking-widest mb-xs">Análisis Ejecutivo</h4>
+<p class="font-body-md text-body-md text-on-surface">Su empresa se encuentra preparada para postular. <span class="font-bold">Tiempo estimado: 2 días hábiles.</span> Requisitos faltantes: 2. Prioridad: Alta.</p>
+</div>
+</div><section class="bg-white border border-outline rounded-xl overflow-hidden">
+<div class="bg-surface-container px-lg py-md border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-widest">Executive Summary</h3>
+<span class="flex items-center gap-xs text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+                            AI-Synthesized Insight
+                        </span>
+</div>
+<div class="p-lg ai-accent-bar m-lg bg-surface-container-lowest">
+<div class="grid md:grid-cols-2 gap-lg">
+<div class="space-y-md">
+<div>
+<h4 class="font-label-md text-label-md text-primary font-bold mb-xs">Purpose</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Update the data center core infrastructure for MINEDU to support the 2025 Digital Education Initiative, impacting over 5 million students nationwide.</p>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary font-bold mb-xs">Effort Estimation</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">High technical complexity requiring specialized network certifications (CCIE/JNCIE) and a 12-month implementation roadmap.</p>
+</div>
+</div>
+<div class="space-y-md">
+<div>
+<h4 class="font-label-md text-label-md text-primary font-bold mb-xs">Requirements</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Compliance with ISO 27001, local technical experience in public sector projects &gt; S/ 5M, and immediate hardware availability.</p>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-primary font-bold mb-xs">Risks</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Global supply chain delays for specific hardware components (estimated 4-month lead time for switch clusters).</p>
+</div>
+</div>
+</div>
+</div>
+</section><section class="bg-white border border-outline rounded-xl mt-xl">
+<div class="bg-surface-container px-lg py-md border-b border-outline-variant">
+<h3 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-widest">Revisión de Documentos</h3>
+</div>
+<div class="p-lg space-y-lg">
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-xl flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-xl mb-sm">upload_file</span>
+<p class="font-body-md text-body-md">Subir Documentos de Sustento</p>
+<p class="font-label-sm text-label-sm opacity-60">PDF, DOCX hasta 10MB</p>
+</div>
+<div class="space-y-sm">
+<div class="flex items-center gap-md p-sm bg-green-100/50 rounded-lg border border-green-100">
+<span class="material-symbols-outlined text-green-700">check_circle</span>
+<p class="font-body-sm text-body-sm text-green-800">Certificado RNP detectado</p>
+</div>
+<div class="flex items-center gap-md p-sm bg-amber-100/50 rounded-lg border border-amber-100">
+<span class="material-symbols-outlined text-amber-800">warning</span>
+<p class="font-body-sm text-body-sm text-amber-800">Falta Anexo 4</p>
+</div>
+<div class="flex items-center gap-md p-sm bg-red-100/50 rounded-lg border border-red-100">
+<span class="material-symbols-outlined text-red-800">error</span>
+<p class="font-body-sm text-body-sm text-red-800">Documento de Experiencia Técnica no encontrado</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Action Plan -->
+<section class="bg-white border border-outline rounded-xl">
+<div class="bg-surface-container px-lg py-md border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-widest">Requirement Checklist &amp; Action Plan</h3>
+<div class="flex gap-sm">
+<button class="p-xs hover:bg-surface-container-high rounded transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Requirement Item -->
+<div class="p-lg flex items-start gap-lg hover:bg-surface-container-lowest transition-colors group">
+<div class="mt-xs">
+<input checked="" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<h4 class="font-body-md text-body-md font-bold text-on-surface">Presentación de Garantía de Seriedad de Oferta</h4>
+<span class="px-sm py-xs bg-green-100 text-green-800 rounded font-label-sm text-label-sm">Completed</span>
+</div>
+<div class="flex gap-md text-on-surface-variant font-label-md text-label-md">
+<span class="flex items-center gap-xs"><span class="material-symbols-outlined text-[16px]">priority_high</span> Priority: High</span>
+<span class="flex items-center gap-xs"><span class="material-symbols-outlined text-[16px]">speed</span> Effort: Low</span>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 p-sm transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Requirement Item -->
+<div class="p-lg flex items-start gap-lg hover:bg-surface-container-lowest transition-colors group">
+<div class="mt-xs">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<h4 class="font-body-md text-body-md font-bold text-on-surface">Certificación ISO/IEC 27001:2022 Vigente</h4>
+<span class="px-sm py-xs bg-amber-100 text-amber-800 rounded font-label-sm text-label-sm">Pending</span>
+</div>
+<div class="flex gap-md text-on-surface-variant font-label-md text-label-md">
+<span class="flex items-center gap-xs text-primary"><span class="material-symbols-outlined text-[16px]">priority_high</span> Priority: Critical</span>
+<span class="flex items-center gap-xs"><span class="material-symbols-outlined text-[16px]">speed</span> Effort: Medium</span>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 p-sm transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Requirement Item -->
+<div class="p-lg flex items-start gap-lg hover:bg-surface-container-lowest transition-colors group">
+<div class="mt-xs">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20 cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<h4 class="font-body-md text-body-md font-bold text-on-surface">Experiencia del Personal Clave (3 Especialistas CCIE)</h4>
+<span class="px-sm py-xs bg-red-100 text-red-800 rounded font-label-sm text-label-sm">At Risk</span>
+</div>
+<div class="flex gap-md text-on-surface-variant font-label-md text-label-md">
+<span class="flex items-center gap-xs"><span class="material-symbols-outlined text-[16px]">priority_high</span> Priority: High</span>
+<span class="flex items-center gap-xs"><span class="material-symbols-outlined text-[16px]">speed</span> Effort: High</span>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 p-sm transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Documents & Timeline Grid -->
+<div class="grid md:grid-cols-2 gap-xl">
+<!-- Documents -->
+<section class="bg-white border border-outline rounded-xl">
+<div class="bg-surface-container px-lg py-md border-b border-outline-variant">
+<h3 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-widest">Official Documents</h3>
+</div>
+<div class="p-md space-y-sm">
+<a class="flex items-center gap-md p-sm rounded-lg border border-transparent hover:border-outline-variant hover:bg-surface-container-low transition-all" href="#">
+<div class="w-10 h-10 rounded bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-body-sm text-body-sm font-bold truncate">Bases Administrativas.pdf</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Readiness Score</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">download</span>
+</a>
+<a class="flex items-center gap-md p-sm rounded-lg border border-transparent hover:border-outline-variant hover:bg-surface-container-low transition-all" href="#">
+<div class="w-10 h-10 rounded bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-body-sm text-body-sm font-bold truncate">Terminos de Referencia.pdf</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Readiness Score</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">download</span>
+</a>
+<a class="flex items-center gap-md p-sm rounded-lg border border-transparent hover:border-outline-variant hover:bg-surface-container-low transition-all" href="#">
+<div class="w-10 h-10 rounded bg-tertiary-container/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-body-sm text-body-sm font-bold truncate">Anexo_05_Formatos_A.docx</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Readiness Score</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">download</span>
+</a>
+</div>
+</section>
+<!-- Timeline -->
+<div class="bg-primary-container/10 border border-primary/20 rounded-xl p-lg mb-lg flex items-center gap-lg">
+<div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md text-primary font-bold uppercase tracking-widest mb-xs">Análisis Ejecutivo</h4>
+<p class="font-body-md text-body-md text-on-surface">Su empresa se encuentra preparada para postular. <span class="font-bold">Tiempo estimado: 2 días hábiles.</span> Requisitos faltantes: 2. Prioridad: Alta.</p>
+</div>
+</div><section class="bg-white border border-outline rounded-xl overflow-hidden">
+<div class="bg-surface-container px-lg py-md border-b border-outline-variant">
+<h3 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-widest">Crucial Dates</h3>
+</div>
+<div class="p-lg relative">
+<div class="absolute left-[39px] top-lg bottom-lg w-px bg-outline-variant"></div>
+<div class="space-y-lg">
+<div class="flex items-center gap-lg relative">
+<div class="w-5 h-5 rounded-full bg-primary border-4 border-white shadow-sm z-10"></div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">30 Oct 2024</p>
+<p class="font-body-sm text-body-sm font-bold">Clarification Questions Deadline</p>
+</div>
+</div>
+<div class="flex items-center gap-lg relative">
+<div class="w-5 h-5 rounded-full bg-primary border-4 border-white shadow-sm z-10"></div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">05 Nov 2024</p>
+<p class="font-body-sm text-body-sm font-bold">Answers Publication</p>
+</div>
+</div>
+<div class="flex items-center gap-lg relative">
+<div class="w-5 h-5 rounded-full bg-primary-container border-4 border-white shadow-sm z-10 ring-4 ring-primary-container/20"></div>
+<div>
+<p class="font-label-sm text-label-sm text-primary font-bold uppercase">15 Nov 2024</p>
+<p class="font-body-sm text-body-sm font-bold">Submission Deadline</p>
+</div>
+</div>
+<div class="flex items-center gap-lg relative opacity-50">
+<div class="w-5 h-5 rounded-full bg-outline-variant border-4 border-white shadow-sm z-10"></div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">02 Dec 2024</p>
+<p class="font-body-sm text-body-sm font-bold">Expected Award Date</p>
+</div>
+</div>
+</div>
+</div>
+</section><section class="bg-white border border-outline rounded-xl mt-xl">
+<div class="bg-surface-container px-lg py-md border-b border-outline-variant">
+<h3 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-widest">Revisión de Documentos</h3>
+</div>
+<div class="p-lg space-y-lg">
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-xl flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-xl mb-sm">upload_file</span>
+<p class="font-body-md text-body-md">Subir Documentos de Sustento</p>
+<p class="font-label-sm text-label-sm opacity-60">PDF, DOCX hasta 10MB</p>
+</div>
+<div class="space-y-sm">
+<div class="flex items-center gap-md p-sm bg-green-100/50 rounded-lg border border-green-100">
+<span class="material-symbols-outlined text-green-700">check_circle</span>
+<p class="font-body-sm text-body-sm text-green-800">Certificado RNP detectado</p>
+</div>
+<div class="flex items-center gap-md p-sm bg-amber-100/50 rounded-lg border border-amber-100">
+<span class="material-symbols-outlined text-amber-800">warning</span>
+<p class="font-body-sm text-body-sm text-amber-800">Falta Anexo 4</p>
+</div>
+<div class="flex items-center gap-md p-sm bg-red-100/50 rounded-lg border border-red-100">
+<span class="material-symbols-outlined text-red-800">error</span>
+<p class="font-body-sm text-body-sm text-red-800">Documento de Experiencia Técnica no encontrado</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Right Sidebar (Quick Facts) -->
+<div class="col-span-12 lg:col-span-4 space-y-lg">
+<div class="bg-white border border-outline rounded-xl p-lg sticky top-[100px]">
+<h3 class="font-label-md text-label-md text-on-surface font-bold uppercase tracking-widest mb-lg pb-md border-b border-outline-variant">Quick Facts</h3>
+<div class="space-y-xl">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-sm">Estimated Budget</p>
+<p class="font-headline-md text-headline-md text-primary font-bold">S/ 8,450,000.00</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-sm">Contracting Entity</p>
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded border border-outline-variant flex items-center justify-center bg-white overflow-hidden">
+<img class="w-full h-full object-contain p-2" data-alt="Official minimalist emblem or logo of a governmental Ministry of Education. The design is clean, using deep navy blue and gold accents, symbolizing institutional stability and authority in a professional Peruvian context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDskB9kr6h9FrzuY3k8DpUpFtYnB09dgHAS-Hd2TAvz2M0Q62Sqz1dbN9AECFyZobMATOxqfQWD3wk3rJ83wy_bE-Xn8VyKPKcHxBejL7_0ySpLdoauM4fhxL0T9R6412tNh5Rks-x54t0WeIkXZr7T7wxK0WmJvziilQYP3CU33KFxhAM61YIBddp79hhREABSw5UCdOxnJcH1luqT_XuGPiTdN_S0gmpE0DNyTtTFKKLg0U_hM4YVqGFl0YRl_V3kWq2AZj-WZxGq"/>
+</div>
+<div>
+<p class="font-body-sm text-body-sm font-bold">Ministerio de Educación</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Sede Central, Lima</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-lg">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-sm">Deadline</p>
+<p class="font-body-md text-body-md font-bold">15 Nov 2024</p>
+<p class="font-label-sm text-label-sm text-error">9 Days Left</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-sm">Confidence</p>
+<p class="font-body-md text-body-md font-bold text-green-700">94%</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">High Win Prob.</p>
+</div>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-sm">Category</p>
+<div class="flex flex-wrap gap-sm">
+<span class="px-md py-xs bg-surface-container-high rounded text-on-surface font-label-md text-label-md border border-outline-variant">Tecnología</span>
+<span class="px-md py-xs bg-surface-container-high rounded text-on-surface font-label-md text-label-md border border-outline-variant">Servicios</span>
+</div>
+</div>
+<div class="pt-lg border-t border-outline-variant space-y-sm">
+<button class="w-full py-md bg-primary text-on-primary font-label-md text-label-md rounded-lg font-bold shadow-sm hover:brightness-110 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+                                Generate Proposal Draft
+                            </button>
+<button class="w-full py-md bg-white text-primary border border-primary font-label-md text-label-md rounded-lg font-bold hover:bg-primary-container/5 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[20px]">share</span>
+                                Share with Team
+                            </button>
+<button class="w-full py-sm text-on-surface-variant font-label-sm text-label-sm hover:underline">
+                                Request Clarification via AI
+                            </button>
+</div>
+</div>
+</div>
+<!-- Entity Insight Card -->
+<div class="bg-tertiary text-on-tertiary-fixed rounded-xl p-lg space-y-md">
+<h4 class="font-label-md text-label-md font-bold uppercase tracking-widest opacity-80">Entity History</h4>
+<p class="font-body-sm text-body-sm italic">"MINEDU has historically prioritized technical robustness over price in 78% of technology tenders awarded in the last 24 months."</p>
+<div class="pt-sm border-t border-white/10 flex justify-between items-center">
+<span class="font-label-sm text-label-sm">Past Awards: 12</span>
+<a class="text-on-tertiary-fixed font-label-sm text-label-sm underline" href="#">Full Entity Report</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Padding -->
+<div class="h-xl"></div>
+</main>
+<script>
+        // Micro-interaction for checklist
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const parent = e.target.closest('.group');
+                const badge = parent.querySelector('.font-label-sm');
+                if (e.target.checked) {
+                    badge.textContent = 'Completed';
+                    badge.className = 'px-sm py-xs bg-green-100 text-green-800 rounded font-label-sm text-label-sm';
+                } else {
+                    badge.textContent = 'Pending';
+                    badge.className = 'px-sm py-xs bg-amber-100 text-amber-800 rounded font-label-sm text-label-sm';
+                }
+            });
+        });
+    </script>
+</body></html>

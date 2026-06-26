@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TenderAlert | Onboarding - Perfil Detectado</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#1f1b17",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#eae1da",
+                    "error-container": "#ffdad6",
+                    "primary": "#00327d",
+                    "outline": "#737784",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#dae2ff",
+                    "primary-container": "#0047ab",
+                    "tertiary": "#3b3531",
+                    "on-error-container": "#93000a",
+                    "surface-bright": "#fff8f5",
+                    "surface": "#fff8f5",
+                    "primary-fixed-dim": "#b1c5ff",
+                    "on-secondary-container": "#626564",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#f7efeb",
+                    "surface-container-highest": "#e9e1dd",
+                    "on-error": "#ffffff",
+                    "secondary": "#5c5f5e",
+                    "on-surface": "#1e1b19",
+                    "surface-container": "#f4ece8",
+                    "on-secondary-fixed-variant": "#454747",
+                    "tertiary-container": "#524c48",
+                    "surface-tint": "#2559bd",
+                    "on-primary-fixed-variant": "#00419e",
+                    "inverse-primary": "#b1c5ff",
+                    "outline-variant": "#c3c6d5",
+                    "on-tertiary-container": "#c6bdb7",
+                    "tertiary-fixed-dim": "#cec5bf",
+                    "surface-variant": "#e9e1dd",
+                    "on-primary-container": "#a5bdff",
+                    "on-secondary-fixed": "#191c1c",
+                    "secondary-fixed": "#e1e3e2",
+                    "on-surface-variant": "#434653",
+                    "inverse-surface": "#33302d",
+                    "surface-dim": "#e0d8d5",
+                    "secondary-fixed-dim": "#c5c7c6",
+                    "on-background": "#1e1b19",
+                    "background": "#fff8f5",
+                    "on-tertiary-fixed-variant": "#4b4641",
+                    "secondary-container": "#e1e3e2",
+                    "on-primary-fixed": "#001946",
+                    "surface-container-high": "#eee7e3",
+                    "surface-container-low": "#faf2ee",
+                    "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "lg": "24px",
+                    "gutter": "20px",
+                    "base": "4px",
+                    "sm": "8px",
+                    "xl": "48px",
+                    "md": "16px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Libre Caslon Text"],
+                    "headline-sm": ["Libre Caslon Text"],
+                    "headline-lg": ["Libre Caslon Text"],
+                    "body-md": ["Hanken Grotesk"],
+                    "body-sm": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "label-md": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "400"}],
+                    "headline-sm": ["18px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "label-sm": ["11px", {"lineHeight": "1", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #F8F9F8; /* Base Layer */
+        }
+        .executive-card {
+            border: 1px solid #E7E5E4;
+            background-color: #FFFFFF;
+        }
+        .analyst-border {
+            border-left: 3px solid #00327d;
+        }
+        .option-button {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .option-button:hover {
+            border-color: #00327d;
+            background-color: rgba(0, 50, 125, 0.05);
+        }
+        .option-button.active {
+            border-color: #00327d;
+            background-color: #00327d;
+            color: white;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col items-center">
+<!-- Top Navigation (Simplified for Onboarding) -->
+<header class="w-full flex justify-between items-center px-xl py-md bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-sm">
+<span class="font-headline-md text-headline-md font-bold text-primary">TenderAlert</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="h-1.5 w-32 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-1/2 bg-primary transition-all duration-700"></div>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Paso 2 de 4</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-container-max flex-1 px-lg py-xl flex flex-col lg:flex-row gap-xl items-start justify-center">
+<!-- Left Column: Executive Summary Card -->
+<div class="w-full lg:w-3/5 space-y-md animate-fade-in">
+<div class="space-y-xs">
+<span class="font-label-md text-label-md text-primary uppercase tracking-widest">Validación de Identidad</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-lg">Perfil Detectado</h1>
+</div>
+<!-- Executive Summary Card -->
+<div class="executive-card rounded-xl overflow-hidden shadow-sm">
+<!-- Card Header -->
+<div class="bg-[#F1F0EE] px-lg py-md border-b border-outline-variant flex justify-between items-center">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Ficha Técnica Empresarial</span>
+<span class="material-symbols-outlined text-primary" data-icon="verified_user">verified_user</span>
+</div>
+<!-- Card Body -->
+<div class="p-lg grid grid-cols-1 md:grid-cols-2 gap-y-lg gap-x-xl">
+<div class="space-y-xs">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Razón Social</p>
+<p class="font-headline-sm text-headline-sm text-on-surface">Infrastructura Global S.A.C.</p>
+</div>
+<div class="space-y-xs">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">RUC</p>
+<p class="font-body-lg text-body-lg text-on-surface font-semibold tracking-tight">20603498210</p>
+</div>
+<div class="md:col-span-2 h-px bg-outline-variant/30"></div>
+<div class="space-y-xs">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Estado RNP</p>
+<div class="flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<p class="font-body-md text-body-md text-on-surface font-medium">Vigente</p>
+</div>
+</div>
+<div class="space-y-xs">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Representante Legal</p>
+<p class="font-body-md text-body-md text-on-surface">Carlos Mendoza</p>
+</div>
+<div class="md:col-span-2 space-y-xs">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Actividad Económica Principal</p>
+<p class="font-body-md text-body-md text-on-surface">Construcción de edificios y obras de ingeniería civil</p>
+</div>
+</div>
+<!-- Card Footer Action -->
+<div class="px-lg py-md bg-surface-container-low border-t border-outline-variant flex items-center justify-between">
+<p class="font-body-sm text-body-sm text-on-surface-variant">Datos sincronizados con SUNAT y OSCE</p>
+<button class="text-primary font-label-md text-label-md flex items-center gap-xs hover:underline">
+                        ¿No es su empresa? <span class="material-symbols-outlined text-[16px]" data-icon="open_in_new">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- Visualization Element -->
+<div class="h-48 rounded-xl border border-outline-variant bg-white relative overflow-hidden group">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<div class="h-full w-full" style="background-image: radial-gradient(#00327d 1px, transparent 1px); background-size: 20px 20px;"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="text-center px-lg">
+<span class="material-symbols-outlined text-primary/40 text-4xl mb-sm" data-icon="analytics">analytics</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant italic">El sistema ha identificado 124 procesos históricos vinculados a su actividad económica.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Invisible Analyst Interaction -->
+<div class="w-full lg:w-2/5 sticky top-xl">
+<div class="analyst-border bg-white p-lg executive-card rounded-r-xl shadow-sm space-y-lg">
+<div class="flex items-start gap-md">
+<div class="bg-primary-container/10 p-sm rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="psychology">psychology</span>
+</div>
+<div class="space-y-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Asistente de Configuración</h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                            Para refinar su motor de búsqueda y priorizar oportunidades relevantes, necesitamos entender su capacidad operativa.
+                        </p>
+</div>
+</div>
+<div class="h-px bg-outline-variant"></div>
+<div class="space-y-md">
+<p class="font-headline-sm text-headline-sm text-on-surface italic">Defina el rango de su capacidad de contratación para ajustar las alertas de licitaciones.</p>
+<div class="grid grid-cols-1 gap-sm" id="question-options"><div class="space-y-lg"><div class="space-y-md"><label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Máxima Capacidad de Contratación (S/)</label><div class="relative pt-base"><input class="w-full h-2 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary" id="capacity-slider" max="3" min="0" oninput="updateSliderLabel(this.value)" step="1" type="range" value="0"/><div class="flex justify-between mt-sm px-xs"><span class="font-label-sm text-label-sm text-on-surface-variant">Hasta 500k</span><span class="font-label-sm text-label-sm text-on-surface-variant">500k - 2M</span><span class="font-label-sm text-label-sm text-on-surface-variant">2M - 10M</span><span class="font-label-sm text-label-sm text-on-surface-variant">10M+</span></div></div></div><div class="flex items-start gap-sm pt-md"><input class="mt-1 rounded border-outline-variant text-primary focus:ring-primary" id="privacy-check" onchange="validateForm()" type="checkbox"/><label class="font-body-sm text-body-sm text-on-surface-variant leading-tight" for="privacy-check">Acepto el tratamiento de mis datos personales y de la empresa de acuerdo con la Ley Peruana 29733.</label></div></div><script>function updateSliderLabel(val) { validateForm(); } function validateForm() { const check = document.getElementById('privacy-check'); const btn = document.getElementById('btn-next'); if(check.checked) { btn.disabled = false; btn.classList.remove('opacity-50', 'cursor-not-allowed'); } else { btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); } }</script></div>
+</div>
+<div class="pt-lg flex flex-col gap-sm">
+<button class="w-full py-md bg-primary text-on-primary rounded-lg font-label-md text-label-md uppercase tracking-widest opacity-50 cursor-not-allowed transition-all hover:bg-primary-container" disabled="" id="btn-next">
+                        Confirmar y Continuar
+                    </button>
+<button class="w-full py-sm text-on-surface-variant font-label-md text-label-md uppercase tracking-widest hover:text-on-surface transition-colors">
+                        Omitir paso
+                    </button>
+</div>
+</div>
+<!-- Secondary Context Image -->
+<div class="mt-lg rounded-xl overflow-hidden aspect-video relative">
+<img class="w-full h-full object-cover grayscale opacity-60 hover:grayscale-0 transition-all duration-700" data-alt="A sophisticated close-up photograph of a modern architectural blueprint spread across a clean white marble table. Beside the blueprint lies a high-end metal fountain pen and a glass of sparkling water, reflecting soft morning sunlight streaming through a large window. The atmosphere is professional, quiet, and exudes executive precision with a palette of soft whites and deep navy blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAgYUJVgdeB7agSGc_zsU6bNBoaBGkgAnjyjKF1PfKnqAwJ0pLk5OB2GC5P1moJ54JF5caEDvOG0HG56eV8P43lMLk52w1jW5SD8b46_gndP1DVJ4l0-SuVGuiuMFU5TtUzNb1dpI4LmQqYMOATLf57WSYPNlppHrMM1SQkbc3l9yh1nHYK6bV8SOQWQIiGNifS3t4mqKpcvd5VJUcoEKBcue5RiEoE_bDhft9_7eJ8KI1SPBEy7LmB8Qj8hurm2rtjQM721N74KnN"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent pointer-events-none"></div>
+</div>
+</div>
+</main>
+<!-- Footer Meta -->
+<footer class="w-full max-w-container-max px-lg py-lg mt-xl border-t border-outline-variant/30 flex justify-between items-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 TenderAlert Enterprise Procurement. Seguridad certificada ISO 27001.</p>
+<div class="flex gap-lg">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Términos de Servicio</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Política de Privacidad</a>
+</div>
+</footer>
+<script>
+        function selectOption(element) {
+            // Remove active class from all options
+            const options = document.querySelectorAll('.option-button');
+            options.forEach(opt => {
+                opt.classList.remove('active');
+                opt.querySelector('.material-symbols-outlined').classList.add('opacity-0');
+                opt.querySelector('.material-symbols-outlined').classList.remove('opacity-100');
+            });
+
+            // Add active class to clicked element
+            element.classList.add('active');
+            element.querySelector('.material-symbols-outlined').classList.remove('opacity-0');
+            element.querySelector('.material-symbols-outlined').classList.add('opacity-100');
+
+            // Enable next button
+            const nextBtn = document.getElementById('btn-next');
+            nextBtn.disabled = false;
+            nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            nextBtn.classList.add('shadow-lg', 'scale-[1.02]');
+        }
+
+        // Micro-interaction for page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.querySelector('main');
+            canvas.classList.add('opacity-0', 'translate-y-4');
+            setTimeout(() => {
+                canvas.classList.remove('opacity-0', 'translate-y-4');
+                canvas.classList.add('transition-all', 'duration-700', 'opacity-100', 'translate-y-0');
+            }, 100);
+        });
+    </script>
+</body></html>
