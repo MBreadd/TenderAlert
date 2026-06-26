@@ -16,13 +16,18 @@ export function OportunidadCard({
 }) {
   const { licitacion: lic, match } = oportunidad;
   const isLocked = index > 0; // First item is free, others locked
+  const isCerrada = new Date(lic.fechaLimite) < new Date();
   
   // Determinamos el color y texto basado en la compatibilidad (mockeado)
   let readinessColor = "text-[#ba1a1a] bg-[#ffdad6]"; // Low
   let readinessText = "No Recomendado Aún";
   let StatusIcon = AlertTriangle;
   
-  if (match.compatibilidad >= 90) {
+  if (isCerrada) {
+    readinessColor = "text-[#434653] bg-[#c3c6d5]/50";
+    readinessText = "Cerrada";
+    StatusIcon = Lock; // Or another icon
+  } else if (match.compatibilidad >= 90) {
     readinessColor = "text-[#00327d] bg-[#0047ab]/10";
     readinessText = "Listo para Postular";
     StatusIcon = CheckCircle;
@@ -39,10 +44,11 @@ export function OportunidadCard({
           {lic.entidad}
         </span>
         <div className={`${readinessColor} px-4 py-1 rounded-full font-['Hanken_Grotesk'] text-xs font-semibold flex items-center`}>
-          {match.compatibilidad >= 90 && (
+          {(!isCerrada && match.compatibilidad >= 90) && (
             <StatusIcon className="w-4 h-4 mr-1" />
           )}
-          Readiness Score: {match.compatibilidad}/100 — {readinessText}
+          {isCerrada && <StatusIcon className="w-4 h-4 mr-1" />}
+          {isCerrada ? "Cerrada" : `Nivel de Preparación: ${match.compatibilidad}/100 — ${readinessText}`}
         </div>
       </div>
       
@@ -107,7 +113,7 @@ export function OportunidadCard({
 
           <div className={`border-l-[3px] border-[#00327d] bg-[#faf2ee] p-4 rounded-r-lg ${isLocked ? 'blur-sm select-none' : 'mb-6'}`}>
             <p className="font-['Hanken_Grotesk'] text-xs font-semibold text-[#00327d] mb-1">
-              ANÁLISIS DE READINESS
+              RESUMEN DE ANÁLISIS
             </p>
             <p className="font-['Hanken_Grotesk'] text-sm text-[#434653] italic">
               "Alta afinidad técnica detectada. Su empresa cumple con los
@@ -120,7 +126,7 @@ export function OportunidadCard({
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/40 rounded-lg z-10 backdrop-blur-[2px]">
               <Lock className="w-6 h-6 text-[#00327d] mb-1" />
               <p className="text-[11px] font-['Hanken_Grotesk'] text-[#00327d] font-bold text-center px-4">
-                Actualiza a Pro para desbloquear el Análisis de Readiness completo.
+                Actualiza a Pro para desbloquear el Análisis completo.
               </p>
             </div>
           )}
@@ -142,6 +148,10 @@ export function OportunidadCard({
             <button className="bg-[#f4ece8] text-[#434653] px-6 py-3 rounded-lg font-['Hanken_Grotesk'] text-xs font-semibold flex items-center cursor-not-allowed">
               <Lock className="w-4 h-4 mr-2" />
               Desbloquear con Pro
+            </button>
+          ) : isCerrada ? (
+            <button disabled className="bg-[#c3c6d5]/30 text-[#434653] px-8 py-3 rounded-lg font-['Hanken_Grotesk'] text-xs font-semibold cursor-not-allowed opacity-70">
+              Licitación Cerrada
             </button>
           ) : (
             <Link

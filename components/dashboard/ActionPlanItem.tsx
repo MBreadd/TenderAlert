@@ -21,22 +21,22 @@ export function ActionPlanItem({ item }: { item: { id: string; texto: string; cu
           <h4 className="font-['Hanken_Grotesk'] text-base font-bold text-[#1e1b19]">{item.texto}</h4>
           {completed ? (
             <span className="px-2 py-1 bg-green-100 text-green-800 rounded font-['Hanken_Grotesk'] text-[11px]">
-              Completed
+              Completado
             </span>
           ) : (
             <span className="px-2 py-1 bg-amber-100 text-amber-800 rounded font-['Hanken_Grotesk'] text-[11px]">
-              Pending
+              Pendiente
             </span>
           )}
         </div>
         <div className="flex gap-4 text-[#434653] font-['Hanken_Grotesk'] text-xs font-semibold">
           <span className={`flex items-center gap-1 ${!completed ? 'text-[#00327d]' : ''}`}>
             <AlertCircle className="w-4 h-4" /> 
-            Priority: {completed ? 'Normal' : 'High'}
+            Prioridad: {completed ? 'Normal' : 'Alta'}
           </span>
           <span className="flex items-center gap-1">
             <Gauge className="w-4 h-4" /> 
-            Effort: Medium
+            Esfuerzo: Medio
           </span>
         </div>
       </div>
