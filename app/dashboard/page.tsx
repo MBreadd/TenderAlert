@@ -1,211 +1,276 @@
-import { mockOportunidades, mockEmpresa } from "@/lib/mocks";
-import { OportunidadCard } from "@/components/dashboard/OportunidadCard";
-import {
-  RefreshCcw,
-  ShieldCheck,
-  AlertTriangle,
-  TrendingUp,
-  TrendingDown,
-  Filter,
-  ChevronDown,
-  Sparkles,
-  Calendar,
-  Clock,
-} from "lucide-react";
+/**
+ * Pantalla 2 — Dashboard / Panel de oportunidades compatibles. 👤 Persona A.
+ *
+ * Lee el perfil Empresa del store (localStorage) y pide a POST /api/match
+ * las OportunidadCompatible ya rankeadas. Si no hay perfil, vuelve al inicio.
+ */
+'use client';
 
-function daysUntil(dateStr: string) {
-  const diff = new Date(dateStr).getTime() - new Date().getTime();
-  return Math.ceil(diff / (1000 * 60 * 60 * 24));
-}
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { OportunidadCard } from "@/components/dashboard/OportunidadCard";
+import { LayoutDashboard, Telescope, FileCheck, BarChart2, Settings, Plus, Search, Bell, HelpCircle, RefreshCcw, ShieldCheck, AlertTriangle, TrendingUp, Filter, ChevronDown, Loader2 } from "lucide-react";
+import type { Empresa, OportunidadCompatible } from "@/lib/types";
+import { api } from "@/lib/api";
+import { getEmpresa } from "@/lib/store/empresa";
 
 export default function DashboardPage() {
-  const empresa = mockEmpresa;
-  const oportunidades = mockOportunidades;
+  const router = useRouter();
+  const [empresa, setEmpresa] = useState<Empresa | null>(null);
+  const [oportunidades, setOportunidades] = useState<OportunidadCompatible[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const urgentCount = oportunidades.filter(
-    (o) => daysUntil(o.licitacion.fechaLimite) <= 7 && o.licitacion.estado === "vigente"
-  ).length;
+  useEffect(() => {
+    const e = getEmpresa();
+    if (!e) {
+      router.replace("/");
+      return;
+    }
+    setEmpresa(e);
+    api<OportunidadCompatible[]>("/api/match", {
+      method: "POST",
+      body: JSON.stringify({ empresa: e }),
+    })
+      .then(setOportunidades)
+      .catch((err) => setError(err instanceof Error ? err.message : "Error cargando oportunidades"))
+      .finally(() => setLoading(false));
+  }, [router]);
 
-  const pipelineTotal = oportunidades
-    .filter((o) => o.licitacion.estado === "vigente")
-    .reduce((sum, o) => sum + o.licitacion.montoEstimado, 0);
-
-  const avgReadiness = Math.round(
-    oportunidades
-      .filter((o) => o.licitacion.estado === "vigente")
-      .reduce((sum, o) => sum + o.match.compatibilidad, 0) /
-      oportunidades.filter((o) => o.licitacion.estado === "vigente").length
-  );
+  if (!empresa) return null;
 
   return (
-    <main className="p-8 max-w-[1280px] mx-auto w-full">
-      {/* ── Page header ───────────────────────────────────── */}
-      <section className="mb-10">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
-          <div>
-            <h2
-              className="text-4xl text-[#1e1b19] leading-tight"
-              style={{ fontFamily: "'Libre Caslon Text', serif" }}
-            >
-              Buenos días, Alejandro
-            </h2>
-            <p className="text-base text-[#434653] mt-1">{empresa.razonSocial}</p>
-          </div>
-          <div className="flex items-center text-[#434653] text-xs font-semibold bg-white border border-[#c3c6d5] px-4 py-2 rounded-lg shrink-0">
-            <RefreshCcw className="w-3.5 h-3.5 mr-2" />
-            Última act.: Hoy, 8:30 AM
-          </div>
+    <div className="flex min-h-screen bg-[#f8f9f8] text-[#1e1b19] font-['Hanken_Grotesk']">
+      {/* SideNavBar */}
+      <aside className="bg-[#fff8f5] border-r border-[#c3c6d5] h-screen w-64 fixed left-0 top-0 flex flex-col py-12 hidden md:flex z-20">
+        <div className="px-4 mb-12">
+          <h1 className="font-['Libre_Caslon_Text'] text-2xl font-bold text-[#00327d]">
+            TenderAlert
+          </h1>
+          <p className="font-['Hanken_Grotesk'] text-xs font-semibold text-[#434653] uppercase tracking-wider mt-1">
+            Enterprise Procurement
+          </p>
         </div>
-      </section>
-
-      {/* ── Intelligence banner ────────────────────────────── */}
-      <section className="mb-8">
-        <div className="bg-[#00327d] text-white rounded-xl px-6 py-4 flex items-start gap-4">
-          <div className="mt-0.5 shrink-0">
-            <Sparkles className="w-5 h-5 opacity-80" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold mb-1 opacity-95">Resumen de esta semana</p>
-            <p className="text-sm opacity-80 leading-relaxed">
-              Encontramos{" "}
-              <strong className="opacity-100">
-                {oportunidades.filter((o) => o.licitacion.estado === "vigente").length} nuevas licitaciones
-              </strong>{" "}
-              compatibles con tu rubro de Limpieza y Mantenimiento. El valor agregado supera{" "}
-              <strong className="opacity-100">
-                S/{" "}
-                {(pipelineTotal / 1000).toFixed(0)}k
-              </strong>
-              .{urgentCount > 0 && (
-                <>
-                  {" "}
-                  <span className="inline-flex items-center gap-1 text-amber-300 font-bold">
-                    <Clock className="w-3.5 h-3.5 inline" /> {urgentCount} cierra en menos de 7 días.
-                  </span>
-                </>
-              )}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── KPI strip ─────────────────────────────────────── */}
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-        {/* Readiness */}
-        <div className="bg-[#00327d] text-white p-6 rounded-xl flex flex-col justify-between shadow-sm">
-          <div className="flex justify-between items-start">
-            <p className="text-[11px] font-bold uppercase tracking-widest opacity-90">Nivel de Preparación</p>
-            <ShieldCheck className="w-5 h-5 opacity-70" />
-          </div>
-          <div className="mt-3">
-            <h3 className="text-4xl font-light" style={{ fontFamily: "'Libre Caslon Text', serif" }}>87/100</h3>
-            <div className="flex flex-wrap gap-1 mt-2">
-              <span className="text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-medium">SUNAT Activo</span>
-              <span className="text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-medium">RNP Vigente</span>
-            </div>
-            <p className="text-[11px] flex items-center opacity-75 mt-2">
-              <AlertTriangle className="w-3 h-3 mr-1.5" />
-              Falta Declaración de Equipos
-            </p>
-          </div>
-        </div>
-
-        {/* Compatible */}
-        <div className="bg-white border border-[#c3c6d5] p-6 rounded-xl flex flex-col justify-between shadow-sm">
-          <div>
-            <p className="text-[11px] font-bold text-[#434653] uppercase tracking-widest">Oportunidades compatibles</p>
-            <h3
-              className="text-4xl text-[#00327d] mt-2"
-              style={{ fontFamily: "'Libre Caslon Text', serif" }}
-            >
-              {oportunidades.filter((o) => o.licitacion.estado === "vigente").length}
-            </h3>
-          </div>
-          <div className="flex items-center text-emerald-600 text-xs font-semibold mt-4">
-            <TrendingUp className="w-3.5 h-3.5 mr-1" />
-            +2 desde ayer
-          </div>
-        </div>
-
-        {/* Pipeline */}
-        <div className="bg-white border border-[#c3c6d5] p-6 rounded-xl shadow-sm">
-          <p className="text-[11px] font-bold text-[#434653] uppercase tracking-widest">Pipeline potencial</p>
-          <h3
-            className="text-4xl text-[#00327d] mt-2"
-            style={{ fontFamily: "'Libre Caslon Text', serif" }}
+        <nav className="flex-1 space-y-1">
+          {/* Dashboard (Active) */}
+          <a
+            className="flex items-center px-4 py-2 text-[#00327d] font-bold border-l-4 border-[#00327d] bg-[#0047ab]/10 transition-all duration-200 opacity-90"
+            href="#"
           >
-            S/ {(pipelineTotal / 1000000).toFixed(1)}M
-          </h3>
-          <div className="flex items-center text-emerald-600 text-xs font-semibold mt-4">
-            <TrendingUp className="w-3.5 h-3.5 mr-1" />
-            +S/ 240k esta semana
-          </div>
-        </div>
-
-        {/* Closing deadlines */}
-        <div className="bg-white border border-[#c3c6d5] p-6 rounded-xl shadow-sm">
-          <p className="text-[11px] font-bold text-[#434653] uppercase tracking-widest">Próximos cierres</p>
-          <h3
-            className="text-4xl text-[#00327d] mt-2"
-            style={{ fontFamily: "'Libre Caslon Text', serif" }}
+            <LayoutDashboard className="w-5 h-5 mr-2" />
+            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Dashboard</span>
+          </a>
+          <a
+            className="flex items-center px-4 py-2 text-[#434653] hover:bg-[#eee7e3] transition-colors"
+            href="#"
           >
-            {oportunidades.filter((o) => {
-              const d = daysUntil(o.licitacion.fechaLimite);
-              return d > 0 && d <= 14;
-            }).length}
-          </h3>
-          <div className="flex items-center text-amber-600 text-xs font-semibold mt-4">
-            <Calendar className="w-3.5 h-3.5 mr-1" />
-            Vencen esta semana
-          </div>
-        </div>
-      </section>
-
-      {/* ── Filter bar ────────────────────────────────────── */}
-      <section className="mb-8 bg-white border border-[#c3c6d5] p-2 rounded-xl flex items-center gap-2 overflow-x-auto shadow-sm">
-        <div className="flex items-center gap-1 ml-2 text-[#737784] shrink-0">
-          <Filter className="w-4 h-4" />
-          <span className="text-[11px] font-bold uppercase tracking-wider">Filtros</span>
-        </div>
-        <div className="w-px h-5 bg-[#c3c6d5] mx-1 shrink-0" />
-        <div className="flex gap-1.5 flex-wrap">
-          {["Sector", "Monto", "Entidad", "Readiness", "Fecha"].map((label) => (
-            <button
-              key={label}
-              className="px-3 py-1.5 rounded-full border border-[#c3c6d5] text-[11px] font-bold text-[#434653] flex items-center hover:bg-[#eee7e3] hover:border-[#737784] transition-all duration-150"
-            >
-              {label}
-              <ChevronDown className="w-3 h-3 ml-1" />
-            </button>
-          ))}
-        </div>
-        <div className="ml-auto pr-2 shrink-0">
-          <button className="text-[#00327d] text-[11px] font-bold hover:underline whitespace-nowrap">
-            Limpiar filtros
+            <Telescope className="w-5 h-5 mr-2" />
+            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Opportunities</span>
+          </a>
+          <a
+            className="flex items-center px-4 py-2 text-[#434653] hover:bg-[#eee7e3] transition-colors"
+            href="#"
+          >
+            <FileCheck className="w-5 h-5 mr-2" />
+            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">My Tenders</span>
+          </a>
+          <a
+            className="flex items-center px-4 py-2 text-[#434653] hover:bg-[#eee7e3] transition-colors"
+            href="#"
+          >
+            <BarChart2 className="w-5 h-5 mr-2" />
+            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Analytics</span>
+          </a>
+          <a
+            className="flex items-center px-4 py-2 text-[#434653] hover:bg-[#eee7e3] transition-colors"
+            href="#"
+          >
+            <Settings className="w-5 h-5 mr-2" />
+            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Settings</span>
+          </a>
+        </nav>
+        <div className="px-4 mt-auto">
+          <button className="w-full py-4 px-6 bg-[#00327d] text-white rounded-lg font-['Hanken_Grotesk'] text-xs font-semibold flex items-center justify-center hover:opacity-90 transition-opacity">
+            <Plus className="w-5 h-5 mr-2" />
+            New Analysis
           </button>
         </div>
-      </section>
+      </aside>
 
-      {/* ── Recommendations list ──────────────────────────── */}
-      <section>
-        <div className="flex items-center justify-between mb-5">
-          <h3
-            className="text-2xl text-[#1e1b19]"
-            style={{ fontFamily: "'Libre Caslon Text', serif" }}
-          >
-            Recomendaciones Prioritarias
-          </h3>
-          <span className="text-sm text-[#434653] hidden sm:flex items-center gap-1">
-            <TrendingDown className="w-4 h-4" />
-            Ordenado por Readiness Score
-          </span>
-        </div>
-        <div className="space-y-5">
-          {oportunidades.map((o, idx) => (
-            <OportunidadCard key={o.licitacion.id} oportunidad={o} index={idx} />
-          ))}
-        </div>
-      </section>
-    </main>
+      {/* Main Container */}
+      <div className="flex-1 md:ml-64 flex flex-col min-w-0">
+        {/* TopNavBar */}
+        <header className="bg-[#fff8f5] border-b border-[#c3c6d5] sticky top-0 z-10 flex justify-between items-center w-full px-12 py-4">
+          <div className="flex items-center bg-[#faf2ee] px-4 py-2 rounded-lg border border-[#c3c6d5] w-96 focus-within:ring-2 focus-within:ring-[#00327d]/10">
+            <Search className="w-5 h-5 text-[#434653] mr-2" />
+            <input
+              className="bg-transparent border-none focus:ring-0 text-sm w-full outline-none"
+              placeholder="Search opportunities, entities, or IDs..."
+              type="text"
+            />
+          </div>
+          <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-4">
+              <button className="text-[#434653] hover:text-[#00327d] transition-colors">
+                <Bell className="w-5 h-5" />
+              </button>
+              <button className="text-[#434653] hover:text-[#00327d] transition-colors">
+                <HelpCircle className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="flex items-center pl-6 border-l border-[#c3c6d5]">
+              <div className="text-right mr-2 hidden lg:block">
+                <p className="font-['Hanken_Grotesk'] text-xs font-semibold text-[#1e1b19]">
+                  {empresa.razonSocial}
+                </p>
+                <p className="text-[10px] font-['Hanken_Grotesk'] text-[#434653] uppercase">
+                  RUC {empresa.ruc}
+                </p>
+              </div>
+              <img
+                className="w-10 h-10 rounded-full border border-[#c3c6d5] object-cover"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFaSOAWQkALlPqzwjxxibuE5xs--V4YluzEQ3V7PbkjvaXNrdMH-nv2T_UU_HxN5fWwJlOSHDPbDnl644zpv7Ar5ySBvdJDPBRzNqBJQOJHjpJ7ZMV-r22jOps64lNH_kS7TT_MM36lCwgVlh3PvDQTr4CCv9DLea-U6gPjFEBIcc0U8cJzecS8XhcUoRdh4fQxKxyo0AuHBcYrUJ0oY_sbc0aI5Ftjgv_TLtyW5tKUBbxIxwzqvjR5GUXnuuH8O1bFNiW8fjwBX_W"
+                alt="Profile"
+              />
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content Area */}
+        <main className="p-12 max-w-[1280px] mx-auto w-full">
+          {/* Header Section */}
+          <section className="mb-12">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
+              <div>
+                <h2 className="font-['Libre_Caslon_Text'] text-4xl text-[#1e1b19]">
+                  Hola, {empresa.razonSocial}
+                </h2>
+                <p className="font-['Hanken_Grotesk'] text-lg text-[#434653]">
+                  RUC {empresa.ruc} · {empresa.estadoSunat}
+                </p>
+              </div>
+              <div className="flex items-center text-[#434653] font-['Hanken_Grotesk'] text-xs font-semibold bg-white border border-[#c3c6d5] px-4 py-2 rounded-lg shrink-0 w-max">
+                <RefreshCcw className="w-4 h-4 mr-1" />
+                Last sync: Today, 8:30 AM
+              </div>
+            </div>
+          </section>
+
+          {/* KPI Strip */}
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {/* Readiness Card */}
+            <div className="bg-[#00327d] text-white p-6 rounded-xl flex flex-col justify-between col-span-full lg:col-span-1 shadow-sm">
+              <div className="flex justify-between items-start">
+                <p className="font-['Hanken_Grotesk'] text-xs font-semibold uppercase opacity-90">
+                  Business Readiness
+                </p>
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <div className="mt-2">
+                <h3 className="font-['Libre_Caslon_Text'] text-4xl">87/100</h3>
+                <div className="flex flex-wrap gap-1 mt-2">
+                  <span className="text-[10px] font-['Hanken_Grotesk'] bg-white/20 px-1 py-0.5 rounded">SUNAT Activo</span>
+                  <span className="text-[10px] font-['Hanken_Grotesk'] bg-white/20 px-1 py-0.5 rounded">RNP Activo</span>
+                </div>
+                <div className="mt-4 space-y-1">
+                  <p className="text-[10px] font-['Hanken_Grotesk'] flex items-center opacity-80">
+                    <AlertTriangle className="w-3 h-3 mr-1" /> 
+                    Falta Declaración
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* KPI Card 1 */}
+            <div className="bg-white border border-[#c3c6d5] p-6 rounded-xl flex flex-col justify-between shadow-sm">
+              <div>
+                <p className="font-['Hanken_Grotesk'] text-xs font-semibold text-[#434653] uppercase">
+                  Oportunidades Compatibles
+                </p>
+                <h3 className="font-['Libre_Caslon_Text'] text-4xl text-[#00327d] mt-2">
+                  {oportunidades.length}
+                </h3>
+              </div>
+              <div className="mt-4 flex items-center text-emerald-600 font-['Hanken_Grotesk'] text-xs font-semibold">
+                <TrendingUp className="w-4 h-4 mr-1" />
+                +2 desde ayer
+              </div>
+            </div>
+
+            {/* KPI Card 2 */}
+            <div className="bg-white border border-[#c3c6d5] p-6 rounded-xl shadow-sm">
+              <p className="font-['Hanken_Grotesk'] text-xs font-semibold text-[#434653] uppercase">
+                Ingresos Potenciales
+              </p>
+              <h3 className="font-['Libre_Caslon_Text'] text-4xl text-[#00327d] mt-2">S/ 15.4M</h3>
+              <div className="mt-4 h-1 bg-[#faf2ee] w-full rounded-full overflow-hidden">
+                <div className="bg-[#00327d] h-full w-2/3"></div>
+              </div>
+            </div>
+
+            {/* KPI Card 3 */}
+            <div className="bg-white border border-[#c3c6d5] p-6 rounded-xl shadow-sm">
+              <p className="font-['Hanken_Grotesk'] text-xs font-semibold text-[#434653] uppercase">
+                Próximos Cierres
+              </p>
+              <h3 className="font-['Libre_Caslon_Text'] text-4xl text-[#00327d] mt-2">4</h3>
+              <p className="text-sm font-['Hanken_Grotesk'] text-[#434653] mt-4">Vencimiento esta semana</p>
+            </div>
+          </section>
+
+          {/* Filter Bar */}
+          <section className="mb-12 bg-white border border-[#c3c6d5] p-2 rounded-lg flex items-center space-x-4 overflow-x-auto shadow-sm">
+            <Filter className="w-5 h-5 text-[#434653] ml-2" />
+            <div className="flex space-x-2">
+              <button className="px-4 py-1 rounded-full border border-[#c3c6d5] font-['Hanken_Grotesk'] text-xs font-semibold flex items-center hover:bg-[#eee7e3] transition-colors">
+                Sector <ChevronDown className="w-4 h-4 ml-1" />
+              </button>
+              <button className="px-4 py-1 rounded-full border border-[#c3c6d5] font-['Hanken_Grotesk'] text-xs font-semibold flex items-center hover:bg-[#eee7e3] transition-colors">
+                Monto <ChevronDown className="w-4 h-4 ml-1" />
+              </button>
+            </div>
+            <div className="ml-auto pr-2 shrink-0">
+              <button className="text-[#00327d] font-['Hanken_Grotesk'] text-xs font-semibold hover:underline">
+                Limpiar filtros
+              </button>
+            </div>
+          </section>
+
+          {/* Main Content Area: Recomendaciones */}
+          <section>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-['Libre_Caslon_Text'] text-2xl text-[#1e1b19]">
+                Recomendaciones Prioritarias
+              </h3>
+              <span className="text-sm font-['Hanken_Grotesk'] text-[#434653] hidden sm:block">
+                Ordenado por Índice de Readiness
+              </span>
+            </div>
+            <div className="space-y-6">
+              {loading && (
+                <div className="bg-white border border-[#c3c6d5] rounded-xl p-12 flex flex-col items-center justify-center text-[#434653]">
+                  <Loader2 className="w-8 h-8 animate-spin text-[#00327d] mb-3" />
+                  <p className="font-['Hanken_Grotesk'] text-sm">Evaluando tu compatibilidad con las licitaciones vigentes…</p>
+                </div>
+              )}
+              {!loading && error && (
+                <div className="bg-white border border-[#ffdad6] rounded-xl p-12 text-center text-[#ba1a1a]">
+                  <p className="font-['Hanken_Grotesk'] text-sm font-semibold">{error}</p>
+                </div>
+              )}
+              {!loading && !error && oportunidades.length === 0 && (
+                <div className="bg-white border border-[#c3c6d5] rounded-xl p-12 text-center text-[#434653]">
+                  <p className="font-['Hanken_Grotesk'] text-sm">No encontramos oportunidades compatibles por ahora.</p>
+                </div>
+              )}
+              {!loading && !error &&
+                oportunidades.map((o, idx) => (
+                  <OportunidadCard key={o.licitacion.id} oportunidad={o} index={idx} />
+                ))}
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
   );
 }
