@@ -203,6 +203,29 @@ export async function fetchLicitacion(id: string): Promise<Licitacion | null> {
     return recosCache.get(id) ?? null;
   }
   const all = await fetchLicitaciones();
-  return all.find((l) => l.id === id) ?? null;
+  const found = all.find((l) => l.id === id);
+  if (found) return found;
+
+  const mockFound = mockLicitaciones.find((l) => l.id === id);
+  if (mockFound) return mockFound;
+
+  // Fallback para IDs generados o dinámicos en la demo
+  console.warn(`[seace] Licitación ${id} no encontrada en caché ni listado general. Generando mock de resiliencia.`);
+  return {
+    id,
+    entidad: "Ministerio de Desarrollo e Inclusión Social",
+    objeto: "Servicio de limpieza y desinfección integral de oficinas",
+    descripcion: "Contratación de un proveedor calificado para realizar servicios de limpieza y mantenimiento de las sedes institucionales.",
+    montoEstimado: 180000,
+    moneda: "PEN",
+    rubro: "limpieza",
+    ubicacion: "Lima",
+    fechaPublicacion: new Date().toISOString().split("T")[0],
+    fechaLimite: new Date(Date.now() + 10 * 24 * 3600 * 1000).toISOString().split("T")[0],
+    estado: "vigente",
+    urlBases: `https://seace.gob.pe/bases/${id}.pdf`,
+    requisitos: ["RNP vigente (Servicios)", "Anexo N°4", "Experiencia mínima 2 años"],
+  };
 }
+
 

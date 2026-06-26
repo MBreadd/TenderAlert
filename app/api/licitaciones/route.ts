@@ -5,11 +5,20 @@
  */
 import { NextResponse } from "next/server";
 import type { ApiResponse, Licitacion } from "@/lib/types";
-import { fetchLicitaciones } from "@/lib/data/seace";
+import { fetchLicitaciones, fetchLicitacion } from "@/lib/data/seace";
 
-export async function GET(request: Request): Promise<NextResponse<ApiResponse<Licitacion[]>>> {
+export async function GET(request: Request): Promise<NextResponse<ApiResponse<Licitacion[] | Licitacion>>> {
   try {
-    const rubro = new URL(request.url).searchParams.get("rubro") ?? undefined;
+    const url = new URL(request.url);
+    const id = url.searchParams.get("id");
+    if (id) {
+      const lic = await fetchLicitacion(id);
+      if (!lic) {
+        return NextResponse.json({ ok: false, error: "Licitación no encontrada" }, { status: 404 }) as any;
+      }
+      return NextResponse.json({ ok: true, data: lic }) as any;
+    }
+    const rubro = url.searchParams.get("rubro") ?? undefined;
     const data = await fetchLicitaciones(rubro);
     return NextResponse.json({ ok: true, data });
   } catch (err) {
@@ -19,3 +28,4 @@ export async function GET(request: Request): Promise<NextResponse<ApiResponse<Li
     );
   }
 }
+

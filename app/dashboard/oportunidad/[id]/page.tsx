@@ -30,14 +30,14 @@ export default function FichaPage() {
     }
     
     Promise.all([
-      api<Licitacion[]>("/api/licitaciones"),
+      api<Licitacion>(`/api/licitaciones?id=${id}`),
       api<FichaRecomendacion>(`/api/ficha/${id}`, {
         method: "POST",
         body: JSON.stringify({ empresa }),
       }),
     ])
-      .then(([lics, f]) => {
-        setLicitacion(lics.find((l) => l.id === id) ?? null);
+      .then(([lic, f]) => {
+        setLicitacion(lic);
         setFicha(f);
       })
       .catch((err) => setError(err instanceof Error ? err.message : "Error generando la ficha"))
