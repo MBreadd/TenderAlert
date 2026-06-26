@@ -1,7 +1,68 @@
+'use client';
+
 import Link from "next/link";
-import { ShieldCheck, Database, Search, FileCheck, ArrowRight, Lock } from "lucide-react";
+import { ShieldCheck, Database, Search, FileCheck, ArrowRight, Lock, Loader2, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const [ruc, setRuc] = useState("");
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationStep, setVerificationStep] = useState(0);
+
+  const handleStart = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (ruc.length < 11) return;
+    
+    setIsVerifying(true);
+    
+    // Simulate Identity Verification steps
+    setTimeout(() => setVerificationStep(1), 800);
+    setTimeout(() => setVerificationStep(2), 1600);
+    setTimeout(() => setVerificationStep(3), 2400);
+    setTimeout(() => {
+      router.push("/onboarding");
+    }, 3200);
+  };
+
+  if (isVerifying) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#fff8f5] text-[#1e1b19] font-['Hanken_Grotesk'] p-6">
+        <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-sm border border-[#c3c6d5] space-y-6">
+          <div className="text-center space-y-2 mb-8">
+            <h2 className="font-['Libre_Caslon_Text'] text-2xl font-bold text-[#00327d]">Verificando Identidad Corporativa</h2>
+            <p className="text-[#434653] text-sm">Cruzando información en tiempo real con las entidades estatales peruanas.</p>
+          </div>
+          
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              {verificationStep >= 1 ? <CheckCircle2 className="w-5 h-5 text-emerald-600" /> : <Loader2 className="w-5 h-5 text-[#00327d] animate-spin" />}
+              <div>
+                <p className="font-semibold text-sm">Consultando SUNAT</p>
+                <p className="text-xs text-[#434653]">RUC {ruc} verificado y activo</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              {verificationStep >= 2 ? <CheckCircle2 className="w-5 h-5 text-emerald-600" /> : (verificationStep >= 1 ? <Loader2 className="w-5 h-5 text-[#00327d] animate-spin" /> : <div className="w-5 h-5 rounded-full border-2 border-dashed border-[#c3c6d5]" />)}
+              <div className={verificationStep < 1 ? "opacity-50" : ""}>
+                <p className="font-semibold text-sm">Consultando OSCE</p>
+                <p className="text-xs text-[#434653]">Verificando inhabilitaciones</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              {verificationStep >= 3 ? <CheckCircle2 className="w-5 h-5 text-emerald-600" /> : (verificationStep >= 2 ? <Loader2 className="w-5 h-5 text-[#00327d] animate-spin" /> : <div className="w-5 h-5 rounded-full border-2 border-dashed border-[#c3c6d5]" />)}
+              <div className={verificationStep < 2 ? "opacity-50" : ""}>
+                <p className="font-semibold text-sm">Verificando RNP</p>
+                <p className="text-xs text-[#434653]">Validando vigencia y capacidad</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-[#fff8f5] text-[#1e1b19] font-['Hanken_Grotesk'] overflow-hidden">
       
@@ -27,15 +88,28 @@ export default function Home() {
             El analista invisible que conecta a tu empresa con las mejores oportunidades del Estado. Evaluamos tu compatibilidad y auditamos tus documentos en segundos.
           </p>
           
-          <div className="pt-8">
-            <Link 
-              href="/onboarding" 
-              className="inline-flex items-center gap-3 bg-[#00327d] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#0047ab] hover:scale-[1.02] hover:shadow-lg transition-all duration-300"
+          <form onSubmit={handleStart} className="pt-8 max-w-lg mx-auto flex flex-col gap-4">
+            <div className="flex items-center bg-white p-2 rounded-xl border border-[#c3c6d5] focus-within:border-[#00327d] focus-within:ring-2 focus-within:ring-[#00327d]/10 transition-all">
+              <span className="text-[#434653] font-bold px-4 border-r border-[#e9e1dd]">RUC</span>
+              <input 
+                type="text" 
+                maxLength={11}
+                placeholder="Ingresa tu RUC (ej. 20603498210)"
+                className="flex-1 bg-transparent border-none focus:ring-0 px-4 text-[#1e1b19] placeholder:text-[#c3c6d5] outline-none"
+                value={ruc}
+                onChange={(e) => setRuc(e.target.value.replace(/\D/g, ''))}
+                required
+              />
+            </div>
+            <button 
+              type="submit"
+              disabled={ruc.length < 11}
+              className="w-full flex items-center justify-center gap-3 bg-[#00327d] text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#0047ab] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
             >
               Comenzar análisis gratis
               <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
+            </button>
+          </form>
         </div>
 
         {/* Value Proposition Cards */}
