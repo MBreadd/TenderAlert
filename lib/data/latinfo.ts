@@ -92,7 +92,9 @@ export async function lookupEmpresaByRuc(ruc: string): Promise<Empresa> {
     return { ...mockEmpresa, ruc };
   }
   try {
-    const res = await fetch(`${BASE_URL}/pe/kyb/${ruc}`, {
+    // Si la URL termina en /licitaciones (como en .env.local), obtenemos el root de la API
+    const apiRoot = BASE_URL.replace(/\/licitaciones$/, "");
+    const res = await fetch(`${apiRoot}/pe/kyb/${ruc}`, {
       headers: { Authorization: `Bearer ${API_KEY}` },
       // datos oficiales cambian poco: cachea unos minutos
       next: { revalidate: 300 },
