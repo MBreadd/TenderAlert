@@ -8,6 +8,7 @@ export default async function FichaPage({ params }: { params: Promise<{ id: stri
   const { id } = await params;
   const licitacion = mockLicitaciones.find((l) => l.id === id) ?? mockLicitaciones[0];
   const ficha = mockFichas[licitacion.id];
+  const isCerrada = new Date(licitacion.fechaLimite) < new Date();
 
   return (
     <div className="flex min-h-screen bg-[#f8f9f8] text-[#1e1b19] font-['Hanken_Grotesk']">
@@ -24,11 +25,11 @@ export default async function FichaPage({ params }: { params: Promise<{ id: stri
           </Link>
           <a className="flex items-center px-4 py-2 rounded-lg text-[#00327d] font-bold border-l-4 border-[#00327d] bg-[#0047ab]/10 font-['Hanken_Grotesk'] text-xs" href="#">
             <Telescope className="w-5 h-5 mr-4" />
-            <span>Opportunities</span>
+            <span>Oportunidades</span>
           </a>
           <a className="flex items-center px-4 py-2 rounded-lg text-[#434653] hover:bg-[#eee7e3] transition-colors font-['Hanken_Grotesk'] text-xs font-semibold" href="#">
             <FileCheck className="w-5 h-5 mr-4" />
-            <span>My Tenders</span>
+            <span>Mis Licitaciones</span>
           </a>
         </nav>
       </aside>
@@ -39,7 +40,7 @@ export default async function FichaPage({ params }: { params: Promise<{ id: stri
           <div className="flex items-center gap-12 flex-1">
             <div className="relative w-full max-w-md focus-within:ring-2 focus-within:ring-[#00327d]/10 rounded-lg">
               <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#434653]" />
-              <input className="w-full bg-[#faf2ee] border-[#c3c6d5] rounded-lg pl-12 pr-4 py-2 text-sm focus:border-[#00327d] focus:ring-0" placeholder="Search opportunities, entities, or keywords..." type="text"/>
+              <input className="w-full bg-[#faf2ee] border-[#c3c6d5] rounded-lg pl-12 pr-4 py-2 text-sm focus:border-[#00327d] focus:ring-0" placeholder="Buscar licitaciones, entidades o IDs..." type="text"/>
             </div>
           </div>
           <div className="flex items-center gap-6">
@@ -56,9 +57,9 @@ export default async function FichaPage({ params }: { params: Promise<{ id: stri
         <main className="p-12 max-w-7xl mx-auto w-full">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 mb-6 text-[#434653] font-['Hanken_Grotesk'] text-xs font-semibold">
-            <Link className="hover:text-[#00327d]" href="/dashboard">Explorer</Link>
+            <Link className="hover:text-[#00327d]" href="/dashboard">Explorar</Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-[#00327d] font-bold">Opportunity Detail</span>
+            <span className="text-[#00327d] font-bold">Detalle de Licitación</span>
           </nav>
 
           <div className="grid grid-cols-12 gap-12">
@@ -74,16 +75,16 @@ export default async function FichaPage({ params }: { params: Promise<{ id: stri
                       <span className="font-['Libre_Caslon_Text'] text-2xl font-bold">{ficha ? ficha.compatibilidad : '0'}</span>
                     </div>
                     <div>
-                      <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653] uppercase tracking-widest">Readiness Score</p>
+                      <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653] uppercase tracking-widest">Nivel de Preparación</p>
                       <p className="font-['Libre_Caslon_Text'] text-lg font-semibold text-[#00327d]">
-                        {ficha && ficha.compatibilidad >= 90 ? 'Alta Afinidad' : 'Evaluación'}
+                        {isCerrada ? 'Cerrada' : (ficha && ficha.compatibilidad >= 90 ? 'Alta Afinidad' : 'Evaluación')}
                       </p>
                     </div>
                   </div>
                   <div className="h-10 w-px bg-[#c3c6d5] hidden md:block"></div>
                   <div className="flex gap-2">
-                    <span className="px-4 py-2 bg-[#e9e1dd] text-[#1e1b19] font-['Hanken_Grotesk'] text-xs font-semibold rounded-full border border-[#c3c6d5]">Priority: High</span>
-                    <span className="px-4 py-2 bg-[#0047ab]/10 text-[#00327d] font-['Hanken_Grotesk'] text-xs font-semibold rounded-full border border-[#00327d]/20">Analysis: Verified</span>
+                    <span className="px-4 py-2 bg-[#e9e1dd] text-[#1e1b19] font-['Hanken_Grotesk'] text-xs font-semibold rounded-full border border-[#c3c6d5]">Prioridad: Alta</span>
+                    <span className="px-4 py-2 bg-[#0047ab]/10 text-[#00327d] font-['Hanken_Grotesk'] text-xs font-semibold rounded-full border border-[#00327d]/20">Verificado</span>
                   </div>
                 </div>
               </section>
@@ -92,10 +93,9 @@ export default async function FichaPage({ params }: { params: Promise<{ id: stri
                 <>
                   <section className="bg-white border border-[#c3c6d5] rounded-xl overflow-hidden">
                     <div className="bg-[#f4ece8] px-6 py-4 border-b border-[#c3c6d5] flex justify-between items-center">
-                      <h3 className="font-['Hanken_Grotesk'] text-xs text-[#1e1b19] font-bold uppercase tracking-widest">Executive Summary</h3>
+                      <h3 className="font-['Hanken_Grotesk'] text-xs text-[#1e1b19] font-bold uppercase tracking-widest">Resumen</h3>
                       <span className="flex items-center gap-1 text-[#00327d] font-['Hanken_Grotesk'] text-[11px]">
-                        <Sparkles className="w-4 h-4" />
-                        AI-Synthesized Insight
+                        Generado automáticamente
                       </span>
                     </div>
                     <div className="p-6 border-l-[4px] border-[#0047ab] m-6 bg-[#ffffff]">
@@ -105,15 +105,19 @@ export default async function FichaPage({ params }: { params: Promise<{ id: stri
                     </div>
                   </section>
 
-                  {/* Checklist */}
                   <section className="bg-white border border-[#c3c6d5] rounded-xl">
                     <div className="bg-[#f4ece8] px-6 py-4 border-b border-[#c3c6d5] flex justify-between items-center">
-                      <h3 className="font-['Hanken_Grotesk'] text-xs text-[#1e1b19] font-bold uppercase tracking-widest">Requirement Checklist & Action Plan</h3>
+                      <h3 className="font-['Hanken_Grotesk'] text-xs text-[#1e1b19] font-bold uppercase tracking-widest">Plan de Acción</h3>
                     </div>
                     <div className="divide-y divide-[#c3c6d5]">
-                      {ficha.planDeAccion.map((item) => (
-                        <ActionPlanItem key={item.id} item={item} />
-                      ))}
+                      <div className="px-6 py-3 bg-[#fff8f5]"><h4 className="font-['Hanken_Grotesk'] text-[#00327d] font-bold text-xs uppercase">Elegibilidad del Negocio</h4></div>
+                      {ficha.planDeAccion.filter(i => i.id === 'c1').map(item => <ActionPlanItem key={item.id} item={item} />)}
+                      <div className="px-6 py-3 bg-[#fff8f5]"><h4 className="font-['Hanken_Grotesk'] text-[#00327d] font-bold text-xs uppercase">Documentación Legal</h4></div>
+                      {ficha.planDeAccion.filter(i => i.id === 'c2').map(item => <ActionPlanItem key={item.id} item={item} />)}
+                      <div className="px-6 py-3 bg-[#fff8f5]"><h4 className="font-['Hanken_Grotesk'] text-[#00327d] font-bold text-xs uppercase">Capacidad Técnica</h4></div>
+                      {ficha.planDeAccion.filter(i => i.id === 'c3').map(item => <ActionPlanItem key={item.id} item={item} />)}
+                      <div className="px-6 py-3 bg-[#fff8f5]"><h4 className="font-['Hanken_Grotesk'] text-[#00327d] font-bold text-xs uppercase">Presentación Final</h4></div>
+                      {ficha.planDeAccion.filter(i => i.id === 'c4').map(item => <ActionPlanItem key={item.id} item={item} />)}
                     </div>
                   </section>
                 </>
@@ -124,22 +128,22 @@ export default async function FichaPage({ params }: { params: Promise<{ id: stri
               )}
 
               {/* Document Review Component */}
-              <DocumentReview />
+              <DocumentReview disabled={isCerrada} />
             </div>
 
             {/* Right Sidebar (Quick Facts) */}
             <div className="col-span-12 lg:col-span-4 space-y-6">
               <div className="bg-white border border-[#c3c6d5] rounded-xl p-6 sticky top-[100px]">
-                <h3 className="font-['Hanken_Grotesk'] text-xs text-[#1e1b19] font-bold uppercase tracking-widest mb-6 pb-4 border-b border-[#c3c6d5]">Quick Facts</h3>
+                <h3 className="font-['Hanken_Grotesk'] text-xs text-[#1e1b19] font-bold uppercase tracking-widest mb-6 pb-4 border-b border-[#c3c6d5]">Datos Clave</h3>
                 <div className="space-y-12">
                   <div>
-                    <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653] uppercase tracking-widest mb-2">Estimated Budget</p>
+                    <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653] uppercase tracking-widest mb-2">Presupuesto Estimado</p>
                     <p className="font-['Libre_Caslon_Text'] text-2xl text-[#00327d] font-bold">
                       S/ {licitacion.montoEstimado.toLocaleString("es-PE")}
                     </p>
                   </div>
                   <div>
-                    <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653] uppercase tracking-widest mb-2">Contracting Entity</p>
+                    <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653] uppercase tracking-widest mb-2">Entidad Convocante</p>
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded border border-[#c3c6d5] flex items-center justify-center bg-white overflow-hidden">
                         <Landmark className="w-6 h-6 text-[#00327d]" />
@@ -152,24 +156,28 @@ export default async function FichaPage({ params }: { params: Promise<{ id: stri
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div>
-                      <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653] uppercase tracking-widest mb-2">Deadline</p>
+                      <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653] uppercase tracking-widest mb-2">Fecha Límite</p>
                       <p className="font-['Hanken_Grotesk'] text-base font-bold">{licitacion.fechaLimite}</p>
-                      <p className="font-['Hanken_Grotesk'] text-[11px] text-[#ba1a1a]">Urgent</p>
+                      {isCerrada ? (
+                        <p className="font-['Hanken_Grotesk'] text-[11px] text-[#ba1a1a]">Cerrada</p>
+                      ) : (
+                        <p className="font-['Hanken_Grotesk'] text-[11px] text-[#ba1a1a]">Urgente</p>
+                      )}
                     </div>
                     <div>
-                      <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653] uppercase tracking-widest mb-2">Confidence</p>
+                      <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653] uppercase tracking-widest mb-2">Probabilidad de éxito</p>
                       <p className="font-['Hanken_Grotesk'] text-base font-bold text-green-700">{ficha ? ficha.compatibilidad : '0'}%</p>
-                      <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653]">High Win Prob.</p>
+                      <p className="font-['Hanken_Grotesk'] text-[11px] text-[#434653]">Alta</p>
                     </div>
                   </div>
                   <div className="pt-6 border-t border-[#c3c6d5] space-y-2">
-                    <button className="w-full py-4 bg-[#00327d] text-white font-['Hanken_Grotesk'] text-xs rounded-lg font-bold shadow-sm hover:brightness-110 transition-all flex items-center justify-center gap-2">
+                    <button disabled={isCerrada} className={`w-full py-4 bg-[#00327d] text-white font-['Hanken_Grotesk'] text-xs rounded-lg font-bold shadow-sm flex items-center justify-center gap-2 ${isCerrada ? 'opacity-50 cursor-not-allowed' : 'hover:brightness-110 transition-all'}`}>
                       <FileCheck className="w-5 h-5" />
-                      Generate Proposal Draft
+                      Generar Borrador
                     </button>
                     <button className="w-full py-4 bg-white text-[#00327d] border border-[#00327d] font-['Hanken_Grotesk'] text-xs rounded-lg font-bold hover:bg-[#0047ab]/5 transition-all flex items-center justify-center gap-2">
                       <Share2 className="w-5 h-5" />
-                      Share with Team
+                      Compartir
                     </button>
                   </div>
                 </div>

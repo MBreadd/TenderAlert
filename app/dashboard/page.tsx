@@ -29,46 +29,31 @@ export default function DashboardPage() {
         </div>
         <nav className="flex-1 space-y-1">
           {/* Dashboard (Active) */}
-          <a
-            className="flex items-center px-4 py-2 text-[#00327d] font-bold border-l-4 border-[#00327d] bg-[#0047ab]/10 transition-all duration-200 opacity-90"
-            href="#"
-          >
-            <LayoutDashboard className="w-5 h-5 mr-2" />
+          <a className="flex items-center px-4 py-2 rounded-lg text-[#00327d] font-bold border-l-4 border-[#00327d] bg-[#0047ab]/10 font-['Hanken_Grotesk'] text-xs" href="#">
+            <LayoutDashboard className="w-5 h-5 mr-4" />
             <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Dashboard</span>
           </a>
-          <a
-            className="flex items-center px-4 py-2 text-[#434653] hover:bg-[#eee7e3] transition-colors"
-            href="#"
-          >
-            <Telescope className="w-5 h-5 mr-2" />
-            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Opportunities</span>
+          <a className="flex items-center px-4 py-2 rounded-lg text-[#434653] hover:bg-[#eee7e3] transition-colors" href="#">
+            <Telescope className="w-5 h-5 mr-4" />
+            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Oportunidades</span>
           </a>
-          <a
-            className="flex items-center px-4 py-2 text-[#434653] hover:bg-[#eee7e3] transition-colors"
-            href="#"
-          >
-            <FileCheck className="w-5 h-5 mr-2" />
-            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">My Tenders</span>
+          <a className="flex items-center px-4 py-2 rounded-lg text-[#434653] hover:bg-[#eee7e3] transition-colors" href="#">
+            <FileCheck className="w-5 h-5 mr-4" />
+            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Mis Licitaciones</span>
           </a>
-          <a
-            className="flex items-center px-4 py-2 text-[#434653] hover:bg-[#eee7e3] transition-colors"
-            href="#"
-          >
-            <BarChart2 className="w-5 h-5 mr-2" />
-            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Analytics</span>
+          <a className="flex items-center px-4 py-2 rounded-lg text-[#434653] hover:bg-[#eee7e3] transition-colors" href="#">
+            <BarChart2 className="w-5 h-5 mr-4" />
+            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Métricas</span>
           </a>
-          <a
-            className="flex items-center px-4 py-2 text-[#434653] hover:bg-[#eee7e3] transition-colors"
-            href="#"
-          >
+          <a className="flex items-center px-4 py-2 rounded-lg text-[#434653] hover:bg-[#eee7e3] transition-colors" href="#">
             <Settings className="w-5 h-5 mr-2" />
-            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Settings</span>
+            <span className="font-['Hanken_Grotesk'] text-xs font-semibold">Configuración</span>
           </a>
         </nav>
         <div className="px-4 mt-auto">
-          <button className="w-full py-4 px-6 bg-[#00327d] text-white rounded-lg font-['Hanken_Grotesk'] text-xs font-semibold flex items-center justify-center hover:opacity-90 transition-opacity">
+          <button className="flex items-center justify-center w-full px-4 py-3 bg-[#00327d] text-white rounded-xl font-bold shadow hover:bg-[#0047ab] transition-colors font-['Hanken_Grotesk'] text-xs">
             <Plus className="w-5 h-5 mr-2" />
-            New Analysis
+            Nuevo Análisis
           </button>
         </div>
       </aside>
@@ -79,9 +64,9 @@ export default function DashboardPage() {
         <header className="bg-[#fff8f5] border-b border-[#c3c6d5] sticky top-0 z-10 flex justify-between items-center w-full px-12 py-4">
           <div className="flex items-center bg-[#faf2ee] px-4 py-2 rounded-lg border border-[#c3c6d5] w-96 focus-within:ring-2 focus-within:ring-[#00327d]/10">
             <Search className="w-5 h-5 text-[#434653] mr-2" />
-            <input
-              className="bg-transparent border-none focus:ring-0 text-sm w-full outline-none"
-              placeholder="Search opportunities, entities, or IDs..."
+            <input 
+              className="w-full bg-[#faf2ee] border-none rounded-lg pl-12 pr-4 py-3 text-sm focus:ring-0 focus:outline-none placeholder:text-[#434653]" 
+              placeholder="Buscar licitaciones, entidades o IDs..." 
               type="text"
             />
           </div>
@@ -126,8 +111,8 @@ export default function DashboardPage() {
                 </p>
               </div>
               <div className="flex items-center text-[#434653] font-['Hanken_Grotesk'] text-xs font-semibold bg-white border border-[#c3c6d5] px-4 py-2 rounded-lg shrink-0 w-max">
-                <RefreshCcw className="w-4 h-4 mr-1" />
-                Last sync: Today, 8:30 AM
+                <RefreshCcw className="w-4 h-4 mr-2" />
+                Última act.: Hoy, 8:30 AM
               </div>
             </div>
           </section>
@@ -138,7 +123,7 @@ export default function DashboardPage() {
             <div className="bg-[#00327d] text-white p-6 rounded-xl flex flex-col justify-between col-span-full lg:col-span-1 shadow-sm">
               <div className="flex justify-between items-start">
                 <p className="font-['Hanken_Grotesk'] text-xs font-semibold uppercase opacity-90">
-                  Business Readiness
+                  Nivel de Preparación
                 </p>
                 <ShieldCheck className="w-6 h-6" />
               </div>

@@ -49,7 +49,7 @@ export default function OnboardingPage() {
         <div className="w-full lg:w-3/5 space-y-4">
           <div className="space-y-1">
             <span className="font-['Hanken_Grotesk'] text-xs font-semibold text-[#00327d] uppercase tracking-widest">
-              Validación de Identidad
+              Perfil Detectado
             </span>
             <h1 className="font-['Libre_Caslon_Text'] text-4xl text-[#1e1b19] mb-6">
               Perfil Detectado
@@ -254,7 +254,7 @@ export default function OnboardingPage() {
       {/* Footer Meta */}
       <footer className="w-full max-w-[1280px] px-6 py-6 mt-12 border-t border-[#c3c6d5]/30 flex justify-between items-center">
         <p className="font-['Hanken_Grotesk'] text-[11px] font-medium text-[#434653]">
-          © 2024 TenderAlert Enterprise Procurement. Seguridad certificada ISO 27001.
+          © 2026 TenderAlert Enterprise Procurement. Seguridad certificada ISO 27001.
         </p>
         <div className="flex gap-6">
           <a
