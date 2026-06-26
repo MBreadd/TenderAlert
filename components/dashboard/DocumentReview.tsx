@@ -3,15 +3,17 @@
 import { useState } from 'react';
 import { Upload, RefreshCcw, CheckCircle, AlertTriangle, XCircle } from 'lucide-react';
 
-export function DocumentReview() {
+export function DocumentReview({ disabled }: { disabled?: boolean }) {
   const [status, setStatus] = useState<'idle' | 'analyzing' | 'done'>('idle');
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
+    if (disabled) return;
     startAnalysis();
   };
 
   const startAnalysis = () => {
+    if (disabled) return;
     setStatus('analyzing');
     setTimeout(() => {
       setStatus('done');
@@ -30,7 +32,7 @@ export function DocumentReview() {
           <div
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
-            className="border-2 border-dashed border-[#c3c6d5] rounded-xl p-12 flex flex-col items-center justify-center text-[#434653] hover:bg-[#faf2ee] transition-colors cursor-pointer"
+            className={`border-2 border-dashed border-[#c3c6d5] rounded-xl p-12 flex flex-col items-center justify-center text-[#434653] transition-colors ${disabled ? 'bg-gray-50 opacity-50 cursor-not-allowed' : 'hover:bg-[#faf2ee] cursor-pointer'}`}
             onClick={startAnalysis}
           >
             <Upload className="w-12 h-12 mb-2" />
@@ -42,7 +44,7 @@ export function DocumentReview() {
         {status === 'analyzing' && (
           <div className="border border-[#c3c6d5] rounded-xl p-12 flex flex-col items-center justify-center text-[#434653]">
             <RefreshCcw className="w-12 h-12 mb-2 animate-spin text-[#00327d]" />
-            <p className="font-['Hanken_Grotesk'] text-base">Analizando documentos con IA...</p>
+            <p className="font-['Hanken_Grotesk'] text-base">Procesando documentos...</p>
           </div>
         )}
 
