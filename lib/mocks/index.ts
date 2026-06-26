@@ -54,67 +54,67 @@ export const mockLicitaciones: Licitacion[] = [
   },
   {
     id: "ocds-pe-003",
-    entidad: "Ministerio de Educación - MINEDU",
-    objeto: "Servicio de limpieza integral de colegios emblemáticos",
+    entidad: "OSITRAN",
+    objeto: "Desarrollo e Implementación de Mesa de Partes Digital",
     descripcion:
-      "Servicio de limpieza y mantenimiento de áreas comunes, aulas y espacios administrativos en 12 colegios emblemáticos de Lima Metropolitana.",
-    montoEstimado: 240000,
+      "Servicios de consultoría y desarrollo de software para la digitalización y automatización de la mesa de partes física de la entidad.",
+    montoEstimado: 150000,
     moneda: "PEN",
-    rubro: "limpieza",
+    rubro: "ti",
     ubicacion: "Lima",
-    fechaPublicacion: "2026-06-18",
-    fechaLimite: "2026-07-18",
+    fechaPublicacion: "2026-06-23",
+    fechaLimite: "2026-07-15",
     estado: "vigente",
     urlBases: "https://seace.gob.pe/bases/ocds-pe-003.pdf",
-    requisitos: ["RNP vigente (Servicios)", "Certificado ISO 9001", "Experiencia mínima 3 años", "Anexo N°4"],
+    requisitos: ["RNP vigente (Servicios)", "Experiencia en desarrollo web React/Node", "Arquitectura en la nube"],
   },
   {
     id: "ocds-pe-004",
-    entidad: "Ministerio de Transportes y Comunicaciones",
-    objeto: "Mantenimiento y limpieza de instalaciones administrativas",
+    entidad: "Hospital Nacional Arzobispo Loayza",
+    objeto: "Suministro de Raciones Alimenticias para Pacientes",
     descripcion:
-      "Servicio integral de mantenimiento, limpieza y pequeñas reparaciones para las instalaciones del ministerio en Lima y provincias.",
-    montoEstimado: 450000,
+      "Adquisición e insumos alimenticios y preparación de raciones preparadas para el área de hospitalización por 6 meses.",
+    montoEstimado: 240000,
     moneda: "PEN",
-    rubro: "mantenimiento",
+    rubro: "alimentos",
     ubicacion: "Lima",
-    fechaPublicacion: "2026-06-15",
-    fechaLimite: "2026-07-25",
+    fechaPublicacion: "2026-06-24",
+    fechaLimite: "2026-07-20",
     estado: "vigente",
     urlBases: "https://seace.gob.pe/bases/ocds-pe-004.pdf",
-    requisitos: ["RNP vigente (Servicios y Bienes)", "Experiencia mínima 5 años", "Capacidad técnica acreditada"],
+    requisitos: ["RNP vigente (Bienes)", "Certificaciones sanitarias DIGESA", "Constancias de cadena de frío"],
   },
   {
     id: "ocds-pe-005",
-    entidad: "PNP - Dirección de Logística",
-    objeto: "Servicio de limpieza y asepsia de instalaciones policiales",
+    entidad: "Gobierno Regional de Lima",
+    objeto: "Ejecución de Mantenimiento de Infraestructura Vial",
     descripcion:
-      "Limpieza, desinfección y mantenimiento de recintos policiales en Lima Norte, incluyendo comisarías y dependencias administrativas.",
-    montoEstimado: 90000,
+      "Mantenimiento preventivo y correctivo de pistas, veredas e infraestructura peatonal en la provincia de Huaral.",
+    montoEstimado: 450000,
     moneda: "PEN",
-    rubro: "limpieza",
+    rubro: "construccion",
     ubicacion: "Lima",
-    fechaPublicacion: "2026-06-25",
-    fechaLimite: "2026-07-08",
+    fechaPublicacion: "2026-06-21",
+    fechaLimite: "2026-07-18",
     estado: "vigente",
     urlBases: "https://seace.gob.pe/bases/ocds-pe-005.pdf",
-    requisitos: ["RNP vigente (Servicios)", "Certificado de antecedentes del personal", "Anexo N°4"],
+    requisitos: ["RNP vigente (Ejecutor de Obras)", "Ingeniero civil residente colegiado", "Equipo pesado propio"],
   },
   {
     id: "ocds-pe-006",
-    entidad: "SUNAT - Intendencia Lima",
-    objeto: "Limpieza y mantenimiento de sedes tributarias Lima",
+    entidad: "Banco de la Nación",
+    objeto: "Mantenimiento Preventivo de Equipos de Climatización",
     descripcion:
-      "Servicios de limpieza profunda, mantenimiento preventivo y gestión de residuos para las sedes de SUNAT en Lima.",
-    montoEstimado: 180000,
+      "Servicio de diagnóstico y mantenimiento para el sistema de aire acondicionado central y extractores de aire de las agencias bancarias.",
+    montoEstimado: 65000,
     moneda: "PEN",
-    rubro: "limpieza",
+    rubro: "mantenimiento",
     ubicacion: "Lima",
-    fechaPublicacion: "2026-05-28",
-    fechaLimite: "2026-06-20",
-    estado: "cerrada",
+    fechaPublicacion: "2026-06-25",
+    fechaLimite: "2026-07-09",
+    estado: "vigente",
     urlBases: "https://seace.gob.pe/bases/ocds-pe-006.pdf",
-    requisitos: ["RNP vigente (Servicios)", "Experiencia mínima 3 años", "Anexo N°4"],
+    requisitos: ["RNP vigente (Servicios)", "Técnicos certificados en refrigeración", "Plan de contingencia ambiental"],
   },
 ];
 
@@ -122,44 +122,44 @@ export const mockMatches: Record<string, MatchResult> = {
   "ocds-pe-001": {
     licitacionId: "ocds-pe-001",
     compatibilidad: 92,
-    motivos: ["Rubro limpieza coincide", "RNP de Servicios vigente", "Ubicación Lima"],
+    motivos: ["Rubro limpieza coincide con tu perfil", "RNP de Servicios vigente", "Ubicación Lima"],
     alertas: ["Verificar Anexo N°4 actualizado"],
   },
   "ocds-pe-002": {
     licitacionId: "ocds-pe-002",
     compatibilidad: 41,
     motivos: ["Ubicación Lima", "Capítulo Servicios"],
-    alertas: ["Rubro seguridad NO está en tu perfil", "Falta certificación SUCAMEC"],
+    alertas: ["Rubro seguridad no está en tu perfil", "Falta certificación SUCAMEC"],
   },
   "ocds-pe-003": {
     licitacionId: "ocds-pe-003",
     compatibilidad: 88,
-    motivos: ["Rubro limpieza coincide perfectamente", "RNP vigente Servicios", "Experiencia acreditada Lima"],
-    alertas: ["Obtener certificado ISO 9001 o equivalente"],
+    motivos: ["Rubro de TI coincide parcialmente", "RNP de Servicios vigente", "Monto dentro de capacidad"],
+    alertas: ["Requiere experiencia en desarrollo web React/Node"],
   },
   "ocds-pe-004": {
     licitacionId: "ocds-pe-004",
-    compatibilidad: 75,
-    motivos: ["Rubro mantenimiento en perfil", "RNP Servicios vigente", "Ubicación Lima"],
-    alertas: ["Ampliar a capítulo Bienes en RNP", "Acreditar 5 años de experiencia"],
+    compatibilidad: 58,
+    motivos: ["Ubicación Lima", "Capítulo Servicios/Bienes"],
+    alertas: ["Rubro alimentos no está en tu perfil", "Requiere certificaciones sanitarias DIGESA"],
   },
   "ocds-pe-005": {
     licitacionId: "ocds-pe-005",
-    compatibilidad: 82,
-    motivos: ["Rubro limpieza coincide", "RNP vigente", "Lima Norte cubierto"],
-    alertas: ["Gestionar antecedentes del personal con anticipación"],
+    compatibilidad: 95,
+    motivos: ["Rubro construcción coincide", "Gran capacidad operativa", "Ubicación Lima"],
+    alertas: ["Requiere Ingeniero residente colegiado"],
   },
   "ocds-pe-006": {
     licitacionId: "ocds-pe-006",
-    compatibilidad: 90,
-    motivos: ["Rubro limpieza — match perfecto", "RNP vigente", "Experiencia corporativa relevante"],
-    alertas: [],
+    compatibilidad: 83,
+    motivos: ["Rubro mantenimiento coincide", "Monto ideal para tu escala", "RNP de Servicios vigente"],
+    alertas: ["Requiere técnicos con certificación ambiental"],
   },
 };
 
 export const mockOportunidades: OportunidadCompatible[] = mockLicitaciones.map((lic) => ({
   licitacion: lic,
-  match: mockMatches[lic.id],
+  match: mockMatches[lic.id] || { licitacionId: lic.id, compatibilidad: 50, motivos: [], alertas: [] },
 }));
 
 export const mockFichas: Record<string, FichaRecomendacion> = {
@@ -179,49 +179,42 @@ export const mockFichas: Record<string, FichaRecomendacion> = {
   "ocds-pe-003": {
     licitacionId: "ocds-pe-003",
     resumenEjecutivo:
-      "MINEDU licita limpieza integral para 12 colegios emblemáticos en Lima Metropolitana por S/ 240,000. Alta compatibilidad con tu rubro. El factor diferenciador es el certificado ISO 9001 — considéralo prioritario. Cierra el 18/07/2026.",
+      "OSITRAN convoca el desarrollo de su mesa de partes digital por S/ 150,000. Alta afinidad técnica. Cierra el 15/07/2026.",
     compatibilidad: 88,
     planDeAccion: [
-      { id: "c1", texto: "Verificar RNP vigente para Servicios", obligatorio: true, cumplido: true },
-      { id: "c2", texto: "Gestionar certificado ISO 9001 o equivalente DISO", obligatorio: true, cumplido: false, nota: "Plazo estimado 7 días hábiles" },
-      { id: "c3", texto: "Preparar Anexo N°4 con declaración jurada", obligatorio: true, cumplido: false },
-      { id: "c4", texto: "Acreditar experiencia mínima 3 años con contratos referenciados", obligatorio: true, cumplido: false },
+      { id: "c1", texto: "Confirmar RNP de Servicios vigente", obligatorio: true, cumplido: true },
+      { id: "c2", texto: "Acreditar experiencia de programadores en React", obligatorio: true, cumplido: true },
+      { id: "c3", texto: "Presentar arquitectura en la nube", obligatorio: true, cumplido: false },
+    ],
+    generadoPor: "mock",
+  },
+  "ocds-pe-005": {
+    licitacionId: "ocds-pe-005",
+    resumenEjecutivo:
+      "Gobierno Regional de Lima solicita mantenimiento vial en Huaral por S/ 450,000. Excelente oportunidad con alta compatibilidad y gran margen. Cierra el 18/07/2026.",
+    compatibilidad: 95,
+    planDeAccion: [
+      { id: "c1", texto: "Acreditar Ingeniero residente colegiado", obligatorio: true, cumplido: false },
+      { id: "c2", texto: "Adjuntar títulos de propiedad de maquinaria", obligatorio: true, cumplido: true },
+      { id: "c3", texto: "Presentar RNP de Ejecutor de Obras", obligatorio: true, cumplido: true },
     ],
     generadoPor: "mock",
   },
 };
 
-export type EstadoPostulacion = "guardado" | "en_revision" | "postulado" | "adjudicado" | "descalificado";
+// Mocks para la sección de "Mis Licitaciones" (Applied/Saved)
+import type { LicitacionPostulada } from "@/lib/types";
 
-export interface MiLicitacion {
-  oportunidad: OportunidadCompatible;
-  estadoPostulacion: EstadoPostulacion;
-  fechaGuardado: string;
-  notas?: string;
-}
-
-export const mockMisLicitaciones: MiLicitacion[] = [
+export const mockLicitacionesPostuladas: LicitacionPostulada[] = [
   {
-    oportunidad: mockOportunidades[0],
-    estadoPostulacion: "en_revision",
-    fechaGuardado: "2026-06-21",
-    notas: "Pendiente completar Anexo N°4 y constancias de experiencia.",
+    licitacion: mockLicitaciones[0], // Miraflores limpieza
+    estadoPostulacion: "en_progreso",
+    progresoChecklist: 65,
   },
   {
-    oportunidad: mockOportunidades[2],
-    estadoPostulacion: "postulado",
-    fechaGuardado: "2026-06-22",
-    notas: "Propuesta técnica entregada. En espera de evaluación.",
-  },
-  {
-    oportunidad: mockOportunidades[3],
-    estadoPostulacion: "guardado",
-    fechaGuardado: "2026-06-24",
-  },
-  {
-    oportunidad: mockOportunidades[5],
-    estadoPostulacion: "adjudicado",
-    fechaGuardado: "2026-05-30",
-    notas: "Contrato firmado el 28/06/2026. Inicio de servicios: 01/07/2026.",
+    licitacion: mockLicitaciones[2], // OSITRAN TI
+    estadoPostulacion: "presentada",
+    fechaPresentacion: "2026-06-25",
+    progresoChecklist: 100,
   },
 ];

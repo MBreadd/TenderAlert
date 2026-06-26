@@ -41,11 +41,13 @@ export default function OnboardingPage() {
           </span>
         </div>
         <div className="flex items-center gap-4">
-          <div className="h-1.5 w-32 bg-[#e9e1dd] rounded-full overflow-hidden">
-            <div className="h-full w-1/2 bg-[#00327d] transition-all duration-700"></div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#00327d]/40"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-[#00327d]"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-[#c3c6d5]"></div>
           </div>
           <span className="font-['Hanken_Grotesk'] text-xs text-[#434653] uppercase tracking-widest font-semibold">
-            Paso 2 de 4
+            Paso 2: Capacidad
           </span>
         </div>
       </header>
@@ -133,7 +135,7 @@ export default function OnboardingPage() {
             </div>
           </div>
 
-          <div className="h-48 rounded-xl border border-[#c3c6d5] bg-white relative overflow-hidden group">
+          <div className="h-44 rounded-xl border border-[#c3c6d5] bg-white relative overflow-hidden group shadow-sm">
             <div className="absolute inset-0 opacity-10 pointer-events-none">
               <div
                 className="h-full w-full"
@@ -148,8 +150,7 @@ export default function OnboardingPage() {
               <div className="text-center px-6">
                 <BarChart2 className="w-10 h-10 text-[#00327d]/40 mb-2 mx-auto" />
                 <p className="font-['Hanken_Grotesk'] text-sm text-[#434653] italic">
-                  El sistema ha identificado 124 procesos históricos vinculados a
-                  su actividad económica.
+                  El sistema ha identificado convocatorias históricas vinculadas a su actividad económica listas para indexar.
                 </p>
               </div>
             </div>
@@ -177,7 +178,7 @@ export default function OnboardingPage() {
             <div className="h-px bg-[#c3c6d5]"></div>
             
             <div className="space-y-4">
-              <p className="font-['Libre_Caslon_Text'] text-lg font-semibold text-[#1e1b19] italic">
+              <p className="font-['Libre_Caslon_Text'] text-base font-semibold text-[#1e1b19] italic">
                 Defina el rango de su capacidad de contratación para ajustar las
                 alertas de licitaciones.
               </p>
@@ -198,17 +199,17 @@ export default function OnboardingPage() {
                         onChange={(e) => setCapacity(parseInt(e.target.value))}
                       />
                       <div className="flex justify-between mt-2 px-1">
-                        <span className="font-['Hanken_Grotesk'] text-[11px] font-medium text-[#434653]">
-                          Hasta 500k
+                        <span className="font-['Hanken_Grotesk'] text-[10px] font-medium text-[#434653]">
+                          Hasta S/ 50k
                         </span>
-                        <span className="font-['Hanken_Grotesk'] text-[11px] font-medium text-[#434653]">
-                          500k - 2M
+                        <span className="font-['Hanken_Grotesk'] text-[10px] font-medium text-[#434653]">
+                          S/ 50k - 500k
                         </span>
-                        <span className="font-['Hanken_Grotesk'] text-[11px] font-medium text-[#434653]">
-                          2M - 10M
+                        <span className="font-['Hanken_Grotesk'] text-[10px] font-medium text-[#434653]">
+                          S/ 500k - 2M
                         </span>
-                        <span className="font-['Hanken_Grotesk'] text-[11px] font-medium text-[#434653]">
-                          10M+
+                        <span className="font-['Hanken_Grotesk'] text-[10px] font-medium text-[#434653]">
+                          Más de S/ 2M
                         </span>
                       </div>
                     </div>
@@ -223,7 +224,7 @@ export default function OnboardingPage() {
                     />
                     <label
                       htmlFor="privacy-check"
-                      className="font-['Hanken_Grotesk'] text-sm text-[#434653] leading-tight"
+                      className="font-['Hanken_Grotesk'] text-xs text-[#434653] leading-tight"
                     >
                       Acepto el tratamiento de mis datos personales y de la empresa
                       de acuerdo con la Ley Peruana 29733.
@@ -251,13 +252,29 @@ export default function OnboardingPage() {
             </div>
           </div>
           
-          <div className="mt-6 rounded-xl overflow-hidden aspect-video relative">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAgYUJVgdeB7agSGc_zsU6bNBoaBGkgAnjyjKF1PfKnqAwJ0pLk5OB2GC5P1moJ54JF5caEDvOG0HG56eV8P43lMLk52w1jW5SD8b46_gndP1DVJ4l0-SuVGuiuMFU5TtUzNb1dpI4LmQqYMOATLf57WSYPNlppHrMM1SQkbc3l9yh1nHYK6bV8SOQWQIiGNifS3t4mqKpcvd5VJUcoEKBcue5RiEoE_bDhft9_7eJ8KI1SPBEy7LmB8Qj8hurm2rtjQM721N74KnN"
-              alt="Context"
-              className="w-full h-full object-cover grayscale opacity-60 hover:grayscale-0 transition-all duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#F8F9F8] to-transparent pointer-events-none"></div>
+          {/* OSCE Live data visualization card */}
+          <div className="mt-6 rounded-xl border border-[#c3c6d5] bg-white p-5 space-y-4 shadow-sm">
+            <h4 className="font-['Libre_Caslon_Text'] text-sm font-bold text-[#00327d] uppercase tracking-wider">
+              Inteligencia OSCE & RNP Detectada
+            </h4>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#434653]">Procesos Ganados Históricos</span>
+                <span className="font-bold text-[#1e1b19]">14 adjudicaciones</span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#434653]">Capítulos Autorizados RNP</span>
+                <span className="font-bold text-emerald-600">Servicios (Vigente)</span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#434653]">Inhabilitaciones OSCE</span>
+                <span className="font-bold text-emerald-600">Ninguna (Apto para licitar)</span>
+              </div>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#434653]">Nivel de Reputación SUNAT</span>
+                <span className="font-bold text-[#00327d]">Bueno (Sin deudas activas)</span>
+              </div>
+            </div>
           </div>
         </div>
       </main>

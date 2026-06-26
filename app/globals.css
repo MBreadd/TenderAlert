@@ -16,10 +16,21 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --font-sans: var(--font-hanken-grotesk), sans-serif;
+  --font-serif: var(--font-libre-caslon), serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #f8f9f8;
+    --foreground: #1e1b19;
+  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Hanken Grotesk', sans-serif;
+  font-family: var(--font-hanken-grotesk), sans-serif;
 }
+
+
